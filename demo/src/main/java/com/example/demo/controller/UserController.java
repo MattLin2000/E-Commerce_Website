@@ -27,14 +27,8 @@ public class UserController {
             @RequestParam String email,
             @RequestParam String tel) {
 
-        User newUser = new User();
-        newUser.setUsername(firstname + "," + lastname);
-        newUser.setPassword(password);
-        newUser.setEmail(email);
-        newUser.setTel(tel);
-        newUser.setRole("customer");
+        userService.addNewUser(firstname, lastname, password, email, tel);
 
-        userRepository.save(newUser);
         return ResponseEntity.ok("User saved successfully");
     }
 }
