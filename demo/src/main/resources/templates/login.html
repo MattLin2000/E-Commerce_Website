@@ -437,7 +437,12 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
-            <form class="card login-form" method="post">
+            <form
+              class="card login-form"
+              method="post"
+              action="/email_login"
+              id="loginForm"
+            >
               <div class="card-body">
                 <div class="title">
                   <h3>馬上登入</h3>
@@ -446,21 +451,19 @@
                 <div class="social-login">
                   <div class="row">
                     <div class="col-lg-4 col-md-4 col-12">
-                      <a class="btn facebook-btn" href="javascript:void(0)"
-                        ><i class="lni lni-facebook-filled"></i> Facebook
-                        login</a
-                      >
+                      <a class="btn facebook-btn" href="javascript:void(0)">
+                        <i class="lni lni-facebook-filled"></i> Facebook login
+                      </a>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
-                      <a class="btn twitter-btn" href="javascript:void(0)"
-                        ><i class="lni lni-twitter-original"></i> Twitter
-                        login</a
-                      >
+                      <a class="btn twitter-btn" href="javascript:void(0)">
+                        <i class="lni lni-twitter-original"></i> Twitter login
+                      </a>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
-                      <a class="btn google-btn" href="javascript:void(0)"
-                        ><i class="lni lni-google"></i> Google login</a
-                      >
+                      <a class="btn google-btn" href="javascript:void(0)">
+                        <i class="lni lni-google"></i> Google login
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -468,20 +471,20 @@
                   <span>或是</span>
                 </div>
                 <div class="form-group input-group">
-                  <label for="reg-fn">信箱</label>
+                  <label for="email">信箱</label>
                   <input
                     class="form-control"
                     type="email"
-                    id="reg-email"
+                    id="email"
                     required
                   />
                 </div>
                 <div class="form-group input-group">
-                  <label for="reg-fn">密碼</label>
+                  <label for="password">密碼</label>
                   <input
                     class="form-control"
                     type="password"
-                    id="reg-pass"
+                    id="password"
                     required
                   />
                 </div>
@@ -494,7 +497,9 @@
                       class="form-check-input width-auto"
                       id="exampleCheck1"
                     />
-                    <label class="form-check-label">記住我</label>
+                    <label class="form-check-label" for="exampleCheck1"
+                      >記住我</label
+                    >
                   </div>
                   <a class="lost-pass" href="account-password-recovery.html"
                     >忘記密碼?</a
@@ -504,14 +509,17 @@
                   <button class="btn" type="submit">登入</button>
                 </div>
                 <p class="outer-link">
-                  還沒有帳號? <a href="register.html">馬上註冊 </a>
+                  還沒有帳號? <a href="/register">馬上註冊</a>
                 </p>
+                <!-- Message Element for Displaying Login Status -->
+                <div id="messageElement" style="display: none"></div>
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+
     <!-- End Account Login Area -->
 
     <!-- Start Footer Area -->
@@ -680,5 +688,77 @@
     <script src="/js/tiny-slider.js"></script>
     <script src="/js/glightbox.min.js"></script>
     <script src="/js/main.js"></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", (event) => {
+        var messageElement = document.getElementById("messageElement");
+
+        document
+          .getElementById("loginForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault(); // 防止表單提交
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            fetch("/check-email", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email: email }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.exists) {
+                  return fetch("/email_login", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      email: email,
+                      password: password,
+                    }),
+                  });
+                } else {
+                  throw new Error("用戶名不存在");
+                }
+              })
+              .then((response) => {
+                console.log("Login response status:", response.status);
+                if (response.ok) {
+                  if (messageElement) {
+                    // 確保 messageElement 存在
+                    messageElement.className = "alert alert-success";
+                    messageElement.textContent = "登入成功！";
+                    messageElement.style.display = "block";
+                    setTimeout(function () {
+                      window.location.href = "/"; // 登入成功後的頁面
+                    }, 1000);
+                  }
+                } else {
+                  return response.text().then((text) => {
+                    console.log("Login response text:", text);
+                    if (messageElement) {
+                      // 確保 messageElement 存在
+                      messageElement.className = "alert alert-danger";
+                      messageElement.textContent = text || "密碼錯誤";
+                      messageElement.style.display = "block";
+                    }
+                    throw new Error(text || "密碼錯誤");
+                  });
+                }
+              })
+              .catch((error) => {
+                console.error(error.message);
+                if (messageElement) {
+                  // 確保 messageElement 存在
+                  messageElement.className = "alert alert-danger";
+                  messageElement.textContent = error.message;
+                  messageElement.style.display = "block";
+                }
+              });
+          });
+      });
+    </script>
   </body>
 </html>
