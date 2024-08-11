@@ -3,7 +3,11 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+!**/src/main/resources/static/**
+*.DS_Store
+*.jpg
+*.png
+*.svg
 ### STS ###
 .apt_generated
 .classpath
