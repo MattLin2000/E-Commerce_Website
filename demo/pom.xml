@@ -47,17 +47,14 @@
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-core</artifactId>
 		</dependency>
-<<<<<<< HEAD
 		<!-- <dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency> -->
-=======
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
->>>>>>> 95662592c5744e560d5f5c0be94892faa69bd0e1
 
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -69,7 +66,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
 		<!-- https://mvnrepository.com/artifact/com.google.auth/google-auth-library-oauth2-http -->
 		<dependency>
 			<groupId>com.google.auth</groupId>
@@ -105,8 +101,6 @@
 			<version>1.32.1</version>
 		</dependency>
 
-=======
->>>>>>> 95662592c5744e560d5f5c0be94892faa69bd0e1
 	</dependencies>
 
 	<build>
