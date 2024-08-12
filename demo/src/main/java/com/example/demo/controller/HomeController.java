@@ -8,16 +8,16 @@ public class HomeController {
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "index"; // 確保 index.html 正確設置
     }
 
     @GetMapping("/register")
     public String register() {
-        return "register";
+        return "register"; // 確保 register.html 正確設置
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "login"; // 確保 login.html 正確設置
     }
 }

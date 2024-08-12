@@ -42,7 +42,7 @@ body {
   font-weight: 500;
   font-style: normal;
   color: #888;
-  overflow-x: hidden;
+  overflow-x: visible;
   font-size: 14px;
 }
 
@@ -1245,7 +1245,7 @@ ol {
 
 .pagination .pagination-list {
   display: inline-block;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .pagination .pagination-list li {
@@ -1300,7 +1300,7 @@ ol {
   position: relative;
   z-index: 1;
   margin-right: 7px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -1382,7 +1382,7 @@ ol {
   width: 100%;
   height: 100%;
   background-color: #fff;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .preloader-inner {
@@ -1813,7 +1813,7 @@ ol {
   -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.137);
           box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.137);
   opacity: 0;
-  visibility: hidden;
+  visibility: visible;
 }
 
 @media (max-width: 767px) {
@@ -1860,7 +1860,7 @@ ol {
 }
 
 .header .navbar-cart .cart-items .shopping-item .shopping-list li {
-  overflow: hidden;
+  overflow: visible;
   border-bottom: 1px solid #e6e6e6;
   padding-bottom: 15px;
   margin-bottom: 15px;
@@ -1905,7 +1905,7 @@ ol {
 
 .header .navbar-cart .cart-items .shopping-item .shopping-list li .cart-img {
   border: 1px solid #ededed;
-  overflow: hidden;
+  overflow: visible;
   height: 80px;
   width: 80px;
   border-radius: 4px;
@@ -1963,7 +1963,7 @@ ol {
 }
 
 .header .navbar-cart .cart-items .shopping-item .bottom .total {
-  overflow: hidden;
+  overflow: visible;
   display: block;
   padding-bottom: 10px;
 }
@@ -2352,7 +2352,7 @@ ol {
   border: 1px solid #eee;
   background-color: #fff;
   opacity: 0;
-  visibility: hidden;
+  visibility: visible;
   border-radius: 0;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
@@ -2381,7 +2381,7 @@ ol {
   border-radius: 0;
   left: 239px;
   opacity: 0;
-  visibility: hidden;
+  visibility: visible;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
 }
@@ -2520,7 +2520,7 @@ ol {
 
 .header.sticky .navbar-brand .white-logo {
   opacity: 0;
-  visibility: hidden;
+  visibility: visible;
 }
 
 .header.sticky .navbar-brand .dark-logo {
@@ -2743,7 +2743,7 @@ ol {
   top: 110% !important;
   left: 0;
   opacity: 0;
-  visibility: hidden;
+  visibility: visible;
   -webkit-transition: all 0.3s ease-out 0s;
   transition: all 0.3s ease-out 0s;
   border-radius: 0 0 4px 4px;
@@ -2773,7 +2773,7 @@ ol {
   position: relative;
   z-index: 1;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
   -webkit-transition: all 0.1s ease;
   transition: all 0.1s ease;
 }
@@ -2869,7 +2869,7 @@ ol {
 
 .hero-area .slider-head {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero-area .slider-head:hover .tns-controls button:first-child {
@@ -3311,7 +3311,7 @@ ol {
 }
 
 .single-product .product-image {
-  overflow: hidden;
+  overflow: visible;
   position: relative;
 }
 
@@ -3350,7 +3350,7 @@ ol {
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
   opacity: 0;
-  visibility: hidden;
+  visibility: visible;
 }
 
 .single-product .product-image .button .btn {
@@ -3469,7 +3469,7 @@ ol {
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 @media (max-width: 767px) {
@@ -3577,7 +3577,7 @@ ol {
   text-align: left;
   background-color: #fff;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
   -webkit-box-shadow: 0px 0px 20px #00000012;
           box-shadow: 0px 0px 20px #00000012;
   padding: 12px;
@@ -3591,7 +3591,7 @@ ol {
 
 .special-offer .offer-content .image {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .special-offer .offer-content .image img {
@@ -3770,7 +3770,7 @@ ol {
 .home-product-list .single-list .list-image a {
   display: block;
   border-radius: 5px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .home-product-list .single-list .list-image a img {
@@ -4013,7 +4013,7 @@ ol {
   font-weight: 500;
   width: 100%;
   display: block;
-  overflow: hidden;
+  overflow: visible;
   border: none;
   padding: 15px 25px;
   padding-right: 40px;
@@ -4150,7 +4150,7 @@ ol {
 
 .blog-section .single-blog {
   margin-top: 30px;
-  overflow: hidden !important;
+  overflow: visible !important;
   -webkit-box-shadow: 0px 0px 20px #00000012;
           box-shadow: 0px 0px 20px #00000012;
   padding: 8px;
@@ -4159,7 +4159,7 @@ ol {
 }
 
 .blog-section .single-blog .blog-img {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .blog-section .single-blog .blog-img a {
@@ -4252,7 +4252,7 @@ ol {
 .blog-single .single-inner .main-content-head {
   border: 1px solid #eee;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .blog-single .meta-information {
@@ -4308,7 +4308,7 @@ ol {
 
 .blog-single .post-thumbnils {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 0;
 }
 
@@ -4551,7 +4551,7 @@ blockquote span {
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   opacity: 0;
-  visibility: hidden;
+  visibility: visible;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
 }
@@ -4580,7 +4580,7 @@ blockquote span {
   padding: 40px;
   margin-top: 30px;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid #eee;
 }
 
@@ -4614,7 +4614,7 @@ blockquote span {
   left: 30px;
   width: 70px;
   height: 70px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 @media (max-width: 767px) {
@@ -4709,7 +4709,7 @@ blockquote span {
   padding: 40px;
   margin-top: 30px;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid #eee;
 }
 
@@ -4788,7 +4788,7 @@ blockquote span {
   margin-bottom: 30px;
   border-radius: 4px;
   border: 1px solid #e7e7e7;
-  overflow: hidden;
+  overflow: visible;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
@@ -4907,7 +4907,7 @@ blockquote span {
   position: absolute;
   left: 0;
   top: 5px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .sidebar .widget.popular-feeds .single-popular-feed .feed-desc .feed-img img {
@@ -5142,7 +5142,7 @@ blockquote span {
   cursor: pointer;
   border: 1px solid #eee;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
   padding: 5px;
 }
 
@@ -5428,12 +5428,12 @@ blockquote span {
 
 .item-details .product-info .quantity .inner-content input.button.first {
   border-radius: 4px 0px 0px 4px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .item-details .product-info .quantity .inner-content input.button.last {
   border-radius: 0px 4px 4px 0px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .item-details .product-info .quantity .inner-content input.button:hover {
@@ -6249,7 +6249,7 @@ blockquote span {
 ========================================*/
 .cart-list-head {
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid #eee;
 }
 
@@ -6389,7 +6389,7 @@ blockquote span {
   width: 300px;
   height: 46px;
   border: 1px solid #dddddd;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 4px;
   color: #333;
   padding: 0px 20px;
@@ -6938,7 +6938,7 @@ blockquote span {
 .checkout-sidebar-banner {
   border: 1px solid #e6e6e6;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .checkout-sidebar-banner a {
@@ -7103,7 +7103,7 @@ blockquote span {
   appearance: none;
   height: 46px;
   border-radius: 4px !important;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
 }
 
@@ -7189,7 +7189,7 @@ blockquote span {
   appearance: none;
   height: 46px;
   border-radius: 4px !important;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .register-form .button {
