@@ -20,4 +20,10 @@ public class HomeController {
         public String login() {
                 return "login"; // 確保 login.html 正確設置
         }
+
+        @GetMapping("/product")
+        public String product() {
+                return "product"; // 確保 login.html 正確設置
+        }
+
 }
