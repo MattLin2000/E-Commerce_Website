@@ -17,8 +17,24 @@ public class Product {
     private String description;
     private double price;
     private int stock;
-    private int categoryId;
+    private Integer categoryId;
     private String image_url;
+    private int rating;
+    private Integer discount;
+
+public Integer getDiscount(){
+    return discount;
+}
+public void setDiscount(int discount){
+    this.discount=discount;
+}
+
+public int getRating(){
+    return rating;
+}
+public void setRating(int rating){
+    this.rating=rating;
+}
 
     public int getProduct_id() {
         return product_id;
