@@ -230,27 +230,27 @@ const handlePageChange = (i)=>{
                 <h3>全站分類</h3>
                 <ul className="list">
                   <li>
-                    <a href="product-grids.html">電腦及週邊</a>
+                    <a href="/Grids">電腦及週邊</a>
                     <span>(1138)</span>
                   </li>
                   <li>
-                    <a href="product-grids.html">智慧型手機及週邊</a>
+                    <a href="/Grids">智慧型手機及週邊</a>
                     <span>(2356)</span>
                   </li>
                   <li>
-                    <a href="product-grids.html">電視及周邊</a>
+                    <a href="/Grids">電視及周邊</a>
                     <span>(420)</span>
                   </li>
                   <li>
-                    <a href="product-grids.html">照相機及攝影機</a>
+                    <a href="/Grids">照相機及攝影機</a>
                     <span>(874)</span>
                   </li>
                   <li>
-                    <a href="product-grids.html">耳機</a>
+                    <a href="/Grids">耳機</a>
                     <span>(1239)</span>
                   </li>
                   <li>
-                    <a href="product-grids.html">音響</a>
+                    <a href="/Grids">音響</a>
                     <span>(340)</span>
                   </li>
                 </ul>

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,7 @@ import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
+@RequestMapping("/register")
 public class UserController {
 
     @Autowired
@@ -26,15 +28,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register/add")
+    @PostMapping("/add")
     public ResponseEntity<String> addNewUser(
-            @RequestParam String firstname,
-            @RequestParam String lastname,
-            @RequestParam String password,
-            @RequestParam String email,
-            @RequestParam String tel) {
+            @RequestBody User user) {
 
-        userService.addNewUser(firstname, lastname, password, email, tel);
+        userService.addNewUser(user);
 
         return ResponseEntity.ok("User saved successfully");
     }

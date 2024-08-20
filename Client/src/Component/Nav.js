@@ -238,27 +238,27 @@ import axios from 'axios';
                                 <div className="mega-category-menu">
                                     <span className="cat-button"><i className="lni lni-menu"></i>全站分類</span>
                                     <ul className="sub-category">
-                                        <li><a href="product-grids.html">3C電子產品 <i className="lni lni-chevron-right"></i></a>
+                                        <li><a href="/Grids">3C電子產品 <i className="lni lni-chevron-right"></i></a>
                                             <ul className="inner-sub-category">
-                                                <li><a href="product-grids.html">數位相機</a></li>
-                                                <li><a href="product-grids.html">攝影機</a></li>
-                                                <li><a href="product-grids.html">無人機</a></li>
-                                                <li><a href="product-grids.html">智慧型手錶</a></li>
-                                                <li><a href="product-grids.html">耳機</a></li>
-                                                <li><a href="product-grids.html">MP3 播放器</a></li>
-                                                <li><a href="product-grids.html">麥克風</a></li>
-                                                <li><a href="product-grids.html">充電器</a></li>
-                                                <li><a href="product-grids.html">電池</a></li>
-                                                <li><a href="product-grids.html">周邊商品</a></li>
+                                                <li><a href="/Grids">數位相機</a></li>
+                                                <li><a href="/Grids">攝影機</a></li>
+                                                <li><a href="/Grids">無人機</a></li>
+                                                <li><a href="/Grids">智慧型手錶</a></li>
+                                                <li><a href="/Grids">耳機</a></li>
+                                                <li><a href="/Grids">MP3 播放器</a></li>
+                                                <li><a href="/Grids">麥克風</a></li>
+                                                <li><a href="/Grids">充電器</a></li>
+                                                <li><a href="/Grids">電池</a></li>
+                                                <li><a href="/Grids">周邊商品</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="product-grids.html">電視</a></li>
-                                        <li><a href="product-grids.html">冰箱</a></li>
-                                        <li><a href="product-grids.html">冷氣</a></li>
-                                        <li><a href="product-grids.html">洗衣機</a></li>
-                                        <li><a href="product-grids.html">電子飯鍋</a></li>
-                                        <li><a href="product-grids.html">空氣清淨機</a></li>
-                                        <li><a href="product-grids.html">熱銷排行榜</a></li>
+                                        <li><a href="/Grids">電視</a></li>
+                                        <li><a href="/Grids">冰箱</a></li>
+                                        <li><a href="/Grids">冷氣</a></li>
+                                        <li><a href="/Grids">洗衣機</a></li>
+                                        <li><a href="/Grids">電子飯鍋</a></li>
+                                        <li><a href="/Grids">空氣清淨機</a></li>
+                                        <li><a href="/Grids">熱銷排行榜</a></li>
                                     </ul>
                                 </div>
                                 {/* End Mega Category Menu */}
@@ -294,7 +294,7 @@ import axios from 'axios';
                                                     data-bs-target="#submenu-1-3" aria-controls="navbarSupportedContent"
                                                     aria-expanded="false" aria-label="Toggle navigation">商城</a>
                                                 <ul className="sub-menu collapse" id="submenu-1-3">
-                                                    <li className="nav-item"><a href="product-grids.html">商品一覽</a></li>
+                                                    <li className="nav-item"><a href="/Grids">商品一覽</a></li>
                                                     <li className="nav-item"><a href="cart.html">購物車</a></li>
                                                 </ul>
                                             </li>
