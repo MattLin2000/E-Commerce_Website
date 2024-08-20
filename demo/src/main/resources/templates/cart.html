@@ -416,15 +416,16 @@
         <div class="row align-items-center">
           <div class="col-lg-6 col-md-6 col-12">
             <div class="breadcrumbs-content">
-              <h1 class="page-title">登入</h1>
+              <h1 class="page-title">購物車</h1>
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-12">
             <ul class="breadcrumb-nav">
               <li>
-                <a href="index.html"><i class="lni lni-home"></i> 首頁</a>
+                <a href="index.html"><i class="lni lni-home"></i>首頁</a>
               </li>
-              <li>登入</li>
+              <li><a href="index.html">商城</a></li>
+              <li>購物車</li>
             </ul>
           </div>
         </div>
@@ -432,98 +433,54 @@
     </div>
     <!-- End Breadcrumbs -->
 
-    <!-- Start Account Login Area -->
-    <div class="account-login section">
+    <!-- Shopping Cart -->
+    <div class="shopping-cart section">
       <div class="container">
+        <div class="cart-list-head" id="cart-single-list">
+          <!-- Cart List Title -->
+          <!-- End Single List list -->
+        </div>
         <div class="row">
-          <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
-            <form
-              class="card login-form"
-              method="post"
-              action="/email_login"
-              id="loginForm"
-            >
-              <div class="card-body">
-                <div class="title">
-                  <h3>馬上登入</h3>
-                  <p>你可以連結帳號登入</p>
+          <div class="col-12">
+            <!-- Total Amount -->
+            <div class="total-amount">
+              <div class="row">
+                <div class="col-lg-8 col-md-6 col-12">
+                  <div class="left">
+                    <div class="coupon">
+                      <form action="#" target="_blank">
+                        <input name="Coupon" placeholder="Enter Your Coupon" />
+                        <div class="button">
+                          <button class="btn">輸入優惠券</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-                <div class="social-login">
-                  <div class="row">
-                    <div class="col-lg-4 col-md-4 col-12">
-                      <a class="btn facebook-btn" href="javascript:void(0)">
-                        <i class="lni lni-facebook-filled"></i> Facebook login
-                      </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                      <a class="btn twitter-btn" href="javascript:void(0)">
-                        <i class="lni lni-twitter-original"></i> Twitter login
-                      </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                      <a
-                        class="btn google-btn"
-                        href="https://accounts.google.com/o/oauth2/auth?scope=profile%20email&response_type=code&redirect_uri=http://localhost:8080/callback/google&client_id=598301744182-5mqok6tceoiai3tsg7uel2bab7esuf93.apps.googleusercontent.com"
+                <div class="col-lg-4 col-md-6 col-12">
+                  <div class="right">
+                    <ul>
+                      <li>購物車總金額<span>$2560.00</span></li>
+                      <li>運費<span>Free</span></li>
+                      <li>折扣金額<span>$29.00</span></li>
+                      <li class="last">應付金額<span>$2531.00</span></li>
+                    </ul>
+                    <div class="button">
+                      <a href="checkout.html" class="btn">結帳</a>
+                      <a href="product-grids.html" class="btn btn-alt"
+                        >繼續購物</a
                       >
-                        <i class="lni lni-google"></i> Google login
-                      </a>
                     </div>
                   </div>
                 </div>
-                <div class="alt-option">
-                  <span>或是</span>
-                </div>
-                <div class="form-group input-group">
-                  <label for="email">信箱</label>
-                  <input
-                    class="form-control"
-                    type="email"
-                    id="email"
-                    required
-                  />
-                </div>
-                <div class="form-group input-group">
-                  <label for="password">密碼</label>
-                  <input
-                    class="form-control"
-                    type="password"
-                    id="password"
-                    required
-                  />
-                </div>
-                <div
-                  class="d-flex flex-wrap justify-content-between bottom-content"
-                >
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      class="form-check-input width-auto"
-                      id="exampleCheck1"
-                    />
-                    <label class="form-check-label" for="exampleCheck1"
-                      >記住我</label
-                    >
-                  </div>
-                  <a class="lost-pass" href="account-password-recovery.html"
-                    >忘記密碼?</a
-                  >
-                </div>
-                <div class="button">
-                  <button class="btn" type="submit">登入</button>
-                </div>
-                <p class="outer-link">
-                  還沒有帳號? <a href="/register">馬上註冊</a>
-                </p>
-                <!-- Message Element for Displaying Login Status -->
-                <div id="messageElement" style="display: none"></div>
               </div>
-            </form>
+            </div>
+            <!--/ End Total Amount -->
           </div>
         </div>
       </div>
     </div>
-
-    <!-- End Account Login Area -->
+    <!--/ End Shopping Cart -->
 
     <!-- Start Footer Area -->
     <footer class="footer">
@@ -687,80 +644,68 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/tiny-slider.js"></script>
-    <script src="/js/glightbox.min.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      window.addEventListener("DOMContentLoaded", (event) => {
-        var messageElement = document.getElementById("messageElement");
-
-        document
-          .getElementById("loginForm")
-          .addEventListener("submit", function (event) {
-            event.preventDefault(); // 防止表單提交
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-
-            fetch("/check-email", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ email: email }),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.exists) {
-                  return fetch("/email_login", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      email: email,
-                      password: password,
-                    }),
-                  });
-                } else {
-                  throw new Error("用戶名不存在");
-                }
-              })
-              .then((response) => {
-                console.log("Login response status:", response.status);
-                if (response.ok) {
-                  if (messageElement) {
-                    // 確保 messageElement 存在
-                    messageElement.className = "alert alert-success";
-                    messageElement.textContent = "登入成功！";
-                    messageElement.style.display = "block";
-                    setTimeout(function () {
-                      window.location.href = "/"; // 登入成功後的頁面
-                    }, 1000);
-                  }
-                } else {
-                  return response.text().then((text) => {
-                    console.log("Login response text:", text);
-                    if (messageElement) {
-                      // 確保 messageElement 存在
-                      messageElement.className = "alert alert-danger";
-                      messageElement.textContent = text || "密碼錯誤";
-                      messageElement.style.display = "block";
-                    }
-                    throw new Error(text || "密碼錯誤");
-                  });
-                }
-              })
-              .catch((error) => {
-                console.error(error.message);
-                if (messageElement) {
-                  // 確保 messageElement 存在
-                  messageElement.className = "alert alert-danger";
-                  messageElement.textContent = error.message;
-                  messageElement.style.display = "block";
-                }
+      $(document).ready(function () {
+        // 讀取購物車內容
+        function loadCartItems() {
+          $.ajax({
+            url: "/api/cart/items",
+            method: "GET",
+            data: { userId: 1 }, // 替換為實際的 userId
+            success: function (data) {
+              const cartList = $(".cart-single-list");
+              cartList.empty(); // 清空現有內容
+              data.forEach((item) => {
+                cartList.append(`
+                  <div class="cart-single-list">
+                    <div class="row align-items-center">
+                      <div class="col-lg-1 col-md-1 col-12">
+                        <a href="product-details.html">
+                          <img src="${item.imageUrl}" alt="${
+                  item.productName
+                }" />
+                        </a>
+                      </div>
+                      <div class="col-lg-4 col-md-3 col-12">
+                        <h5 class="product-name">
+                          <a href="product-details.html">${item.productName}</a>
+                        </h5>
+                        <p class="product-des">
+                          <span><em>Type:</em> ${item.productType}</span>
+                          <span><em>Color:</em> ${item.productColor}</span>
+                        </p>
+                      </div>
+                      <div class="col-lg-2 col-md-2 col-12">
+                        <div class="count-input">
+                          <select class="form-control">
+                            <option>${item.quantity}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-2 col-12">
+                        <p>$${item.totalAmount.toFixed(2)}</p>
+                      </div>
+                      <div class="col-lg-2 col-md-2 col-12">
+                        <p>$${item.discount.toFixed(2)}</p>
+                      </div>
+                      <div class="col-lg-1 col-md-2 col-12">
+                        <a class="remove-item" href="javascript:void(0)">
+                          <i class="lni lni-close"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                `);
               });
+            },
+            error: function (xhr, status, error) {
+              console.error("Error loading cart items:", status, error);
+            },
           });
+        }
+
+        loadCartItems();
       });
     </script>
   </body>

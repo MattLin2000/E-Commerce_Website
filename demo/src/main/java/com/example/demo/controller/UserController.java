@@ -12,17 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.User;
-import com.example.demo.model.loginResponse;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.JwtService;
 import com.example.demo.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 public class UserController {
 
-    @Autowired
-    private JwtService jwtService;
-    
     @Autowired
     private UserRepository userRepository;
 
@@ -52,24 +49,13 @@ public class UserController {
     }
 
     @PostMapping("/email_login")
-public ResponseEntity<loginResponse> login(@RequestBody User user) {
-    try {
+    public ResponseEntity<String> login(@RequestBody User user, HttpSession session) {
         User dbUser = userService.findByEmail(user.getEmail());
         if (dbUser != null && dbUser.getPassword().equals(user.getPassword())) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("email", dbUser.getEmail());
-            map.put("password", dbUser.getPassword());
-
-        String jwt = jwtService.generateToken(map);
-
-            return ResponseEntity.ok(new loginResponse(jwt,"login success"));
+            session.setAttribute("user", dbUser);
+            return ResponseEntity.ok("Login successful");
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new loginResponse(null, "Invalid username or password"));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
-    } catch (Exception e) {
-        e.printStackTrace();  // Log the exception
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new loginResponse(null, "An error occurred"));
     }
-}
-
 }
