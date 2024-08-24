@@ -1,6 +1,6 @@
 import React from 'react';
 import whiteLogo from '../images/logo/white-logo.svg';
-import creditCardsFooter from '../images//footer/credit-cards-footer.png';
+import creditCardsFooter from '../images/footer/credit-cards-footer.png';
 import '../css/bootstrap.min.css';
 import '../css/LineIcons.3.0.css';
 import '../css/tiny-slider.css';

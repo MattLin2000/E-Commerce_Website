@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +13,8 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int product_id;
+    @Column(name="product_id")
+    private int productId;
     private String name;
     private String description;
     private double price;
@@ -37,11 +39,11 @@ public void setRating(int rating){
 }
 
     public int getProduct_id() {
-        return product_id;
+        return productId;
     }
 
     public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+        this.productId = product_id;
     }
 
     public String getName() {

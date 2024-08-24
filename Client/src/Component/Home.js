@@ -1,11 +1,10 @@
 import React from 'react';
 import sliderBg1 from '../images/hero/slider-bg1.jpg';
-
 import sliderBnr from '../images/hero/slider-bnr.jpg';
 import brand01 from '../images/brands/01.png';
 import brand02 from '../images/brands/02.png';
 import brand03 from '../images/brands/03.png';
-import brand04 from '../images//brands/04.png';
+import brand04 from '../images/brands/04.png';
 import brand05 from '../images/brands/05.png';
 import brand06 from '../images/brands/06.png';
 import '../css/bootstrap.min.css';

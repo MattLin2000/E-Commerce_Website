@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+
 function Register() {
   // 使用 useState 來管理各個輸入框的狀態
   const [firstName, setFirstName] = useState('');
@@ -9,29 +8,21 @@ function Register() {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-const navigate = useNavigate();
-  // 表單提交處理函數
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // 阻止表单提交后页面刷新
-    try {
-      const response = await axios.post('http://localhost:8080/register/add', {
-          username: firstName+lastName,
-          email: email,
-          tel: phone, // 确保使用正确的参数名称
-          password: password
-      });
-      console.log(response.data);
-  } catch (error) {
-      console.error("error while registering new account", error);
-      if (error.response) {
-          console.error("Backend returned error:", error.response.data);
-      }
-      return error;
-  }
-alert("註冊成功！將導入首頁")
-navigate("/");
-};
 
+  // 表單提交處理函數
+  const handleSubmit = (event) => {
+    event.preventDefault(); // 阻止表單提交後頁面刷新
+    // 在這裡可以進行註冊邏輯處理，例如發送 API 請求
+    if (password !== confirmPassword) {
+      alert('密碼與確認密碼不匹配');
+      return;
+    }
+    console.log('First Name:', firstName);
+    console.log('Last Name:', lastName);
+    console.log('Email:', email);
+    console.log('Phone:', phone);
+    console.log('Password:', password);
+  };
 
   return (
     <div>

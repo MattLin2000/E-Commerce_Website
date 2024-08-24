@@ -5,92 +5,95 @@ import '../css/tiny-slider.css';
 import '../css/glightbox.min.css';
 import '../css/main.css';
 import axios from 'axios';
-const InitialProducts = [
-  {
-    product_id: 1,
-    category_id: 'Watches',
-    name: 'Xiaomi Mi Band 5',
-    image_url: '/images/products/product-1.jpg', 
-    price: '199.00',
-    rating: 4.0,
-    discount: null, 
-  },
-  {
-    product_id: 2,
-    category_id: 'Speaker',
-    name: 'Bluetooth Speaker',
-    image_url: '/images/products/product-2.jpg', 
-    price: '275.00',
-    rating: 5.0,
-    discount: 25,
-  },
-  {
-    product_id: 3,
-    category_id: 'Camera',
-    name: 'WiFi Security Camera',
-    image_url: '/images/products/product-3.jpg', 
-    price: '399.00',
-    rating: 5.0,
-    discount: null,
-  },
-  {
-    product_id: 4,
-    category_id: 'Phones',
-    name: 'iphone 6x plus',
-    image_url: '/images/products/product-4.jpg', 
-    price: '400.00',
-    rating: 5.0,
-    discount: null,
-  },
-  {
-    product_id: 5,
-    category_id: 'Headphones',
-    name: 'Wireless Headphones',
-    image_url: '/images/products/product-5.jpg', 
-    price: '350.00',
-    rating: 5.0,
-    discount: null,
-  },
-  {
-    product_id: 6,
-    category_id: 'Speaker',
-    name: 'Mini Bluetooth Speaker',
-    image_url: '/images/products/product-6.jpg', 
-    price: '70.00',
-    rating: 4.0,
-    discount: null,
-  },
-  {
-    product_id: 7,
-    category_id: 'Headphones',
-    name: 'Wireless Headphones',
-    image_url: '/images/products/product-7.jpg', 
-    price: '100.00',
-    rating: 4.0,
-    discount: 50,
-  },
-  {
-    product_id: 8,
-    category_id: 'Laptop',
-    name: 'Apple MacBook Air',
-    image_url: '/images/products/product-8.jpg', 
-    price: '899.00',
-    rating: 5.0,
-    discount: null,
-  },
-];
+import { useNavigate } from 'react-router-dom';
+
+// const InitialProducts = [
+//   {
+//     product_id: 1,
+//     category_id: 'Watches',
+//     name: 'Xiaomi Mi Band 5',
+//     image_url: '/images/products/product-1.jpg', 
+//     price: '199.00',
+//     rating: 4.0,
+//     discount: null, 
+//   },
+//   {
+//     product_id: 2,
+//     category_id: 'Speaker',
+//     name: 'Bluetooth Speaker',
+//     image_url: '/images/products/product-2.jpg', 
+//     price: '275.00',
+//     rating: 5.0,
+//     discount: 25,
+//   },
+//   {
+//     product_id: 3,
+//     category_id: 'Camera',
+//     name: 'WiFi Security Camera',
+//     image_url: '/images/products/product-3.jpg', 
+//     price: '399.00',
+//     rating: 5.0,
+//     discount: null,
+//   },
+//   {
+//     product_id: 4,
+//     category_id: 'Phones',
+//     name: 'iphone 6x plus',
+//     image_url: '/images/products/product-4.jpg', 
+//     price: '400.00',
+//     rating: 5.0,
+//     discount: null,
+//   },
+//   {
+//     product_id: 5,
+//     category_id: 'Headphones',
+//     name: 'Wireless Headphones',
+//     image_url: '/images/products/product-5.jpg', 
+//     price: '350.00',
+//     rating: 5.0,
+//     discount: null,
+//   },
+//   {
+//     product_id: 6,
+//     category_id: 'Speaker',
+//     name: 'Mini Bluetooth Speaker',
+//     image_url: '/images/products/product-6.jpg', 
+//     price: '70.00',
+//     rating: 4.0,
+//     discount: null,
+//   },
+//   {
+//     product_id: 7,
+//     category_id: 'Headphones',
+//     name: 'Wireless Headphones',
+//     image_url: '/images/products/product-7.jpg', 
+//     price: '100.00',
+//     rating: 4.0,
+//     discount: 50,
+//   },
+//   {
+//     product_id: 8,
+//     category_id: 'Laptop',
+//     name: 'Apple MacBook Air',
+//     image_url: '/images/products/product-8.jpg', 
+//     price: '899.00',
+//     rating: 5.0,
+//     discount: null,
+//   },
+// ];
 
 
 
 
 
 function Grids({ ProductList, setProductList, setCurrentPage, CurrentPage, searchText, TotalPage }) {
-  const [products, setProducts] = useState(InitialProducts);
+  const [products, setProducts] = useState(ProductList);
   const [sortOption, setSortOption] = useState('rating');
   const [searchPage,setSearchPage]=useState('0');
+  const navigate = useNavigate();
 
   // 分頁搜索切換頁面
-  const searchNextPage = async (page) => {
+  const searchNextPage = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api/products/search", {
         params: { 
@@ -133,8 +136,7 @@ useEffect(()=>{
 if(ProductList&&ProductList.length>0){
   setProducts(ProductList);
 }else{
-  setProducts(InitialProducts);
-
+navigate("/CantFindProduct")
 }
 },[ProductList])
 
@@ -180,31 +182,31 @@ const handlePageChange = (i)=>{
   };
 
   return (
-    <div>
-    <div className="breadcrumbs">
-    <div className="container">
-      <div className="row align-items-center">
-        <div className="col-lg-6 col-md-6 col-12">
-          <div className="breadcrumbs-content">
-            <h1 className="page-title">商品一覽</h1>
+      <div>
+      <div className="breadcrumbs">
+      <div className="container">
+        <div className="row align-items-center">
+          <div className="col-lg-6 col-md-6 col-12">
+            <div className="breadcrumbs-content">
+              <h1 className="page-title">商品一覽</h1>
+            </div>
           </div>
-        </div>
-        <div className="col-lg-6 col-md-6 col-12">
-          <ul className="breadcrumb-nav">
-            <li>
-              <a href="/">
-                <i className="lni lni-home"></i> 首頁
-              </a>
-            </li>
-            <li>
-              <a href="/ProductGrids">商城</a>
-            </li>
-            <li>商品一覽</li>
-          </ul>
-        </div>
-  </div>
-  </div>
-  </div>
+          <div className="col-lg-6 col-md-6 col-12">
+            <ul className="breadcrumb-nav">
+              <li>
+                <a href="/">
+                  <i className="lni lni-home"></i> 首頁
+                </a>
+              </li>
+              <li>
+                <a href="/ProductGrids">商城</a>
+              </li>
+              <li>商品一覽</li>
+            </ul>
+          </div>
+    </div>
+    </div>
+    </div>
 
     
     <div className="product-grids section">
@@ -230,27 +232,27 @@ const handlePageChange = (i)=>{
                 <h3>全站分類</h3>
                 <ul className="list">
                   <li>
-                    <a href="/Grids">電腦及週邊</a>
+                    <a href="product-grids.html">電腦及週邊</a>
                     <span>(1138)</span>
                   </li>
                   <li>
-                    <a href="/Grids">智慧型手機及週邊</a>
+                    <a href="product-grids.html">智慧型手機及週邊</a>
                     <span>(2356)</span>
                   </li>
                   <li>
-                    <a href="/Grids">電視及周邊</a>
+                    <a href="product-grids.html">電視及周邊</a>
                     <span>(420)</span>
                   </li>
                   <li>
-                    <a href="/Grids">照相機及攝影機</a>
+                    <a href="product-grids.html">照相機及攝影機</a>
                     <span>(874)</span>
                   </li>
                   <li>
-                    <a href="/Grids">耳機</a>
+                    <a href="product-grids.html">耳機</a>
                     <span>(1239)</span>
                   </li>
                   <li>
-                    <a href="/Grids">音響</a>
+                    <a href="product-grids.html">音響</a>
                     <span>(340)</span>
                   </li>
                 </ul>
