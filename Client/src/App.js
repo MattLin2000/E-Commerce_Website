@@ -12,7 +12,7 @@ import OrderManage from './Component/OrderManage'
 import YourProducts from './Component/YourProduct';
 import AddProduct from './Component/AddProduct';
 import CantFindProduct from './Component/CantFindProduct';
-
+import axios from 'axios';
 
 function App() {
 
@@ -20,13 +20,38 @@ function App() {
   const [CurrentPage,setCurrentPage]=useState(null);
   const [TotalPage,setTotalPage]=useState(null);
   const [searchText, setSearchText] = useState("");
+  //Page物件
+  const [pageable,setPageable]=useState();
+  //product_details，獲得購物車商品資訊，數量。。
+  const [details,setDetails]=useState();
+        
+  //購物車搜索,返回Page物件和product_details
+  const getCart = async ()=>{
+  try{
+  const response =  await axios.get("http://localhost:8080/api/cart/get",{
+          params:
+          {
+              id:1}//根據id修改
+      });
+  setPageable(response.data[0]);  
+  setDetails(response.data[1]);
+  console.log(response.data[0]);
+  }catch(error){
+      console.error();
+  }
+}
+  
   return (
 <BrowserRouter>
 <Routes>
   <Route path="/" element={<Layout searchText={searchText} setSearchText={setSearchText}
-   setProductList={setProductList} setCurrentPage={setCurrentPage} setTotalPage={setTotalPage}/>} >
+   setProductList={setProductList} setCurrentPage={setCurrentPage} setTotalPage={setTotalPage}
+   pageable={pageable}  getCart={getCart} details={details}/>} >
       <Route index element={<Home />}/>
-      <Route path="Grids" element={<Grids searchText={searchText} setProductList={setProductList} ProductList={ProductList} setCurrentPage={setCurrentPage} CurrentPage={CurrentPage} TotalPage={TotalPage}/>}/>
+      <Route path="Grids" element={<Grids searchText={searchText} setProductList={setProductList}
+       ProductList={ProductList} setCurrentPage={setCurrentPage} 
+       CurrentPage={CurrentPage} TotalPage={TotalPage}
+       getCart={getCart}/>}/>
       <Route path='Login' element={<Login />}/>
       <Route path='Register' element={<Register />}/>
       <Route path='Checkout' element={<Checkout />}/>

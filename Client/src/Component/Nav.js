@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/bootstrap.min.css';
 import '../css/LineIcons.3.0.css';
@@ -10,21 +10,25 @@ import axios from 'axios';
 
 
     
-    function Nav({ setProductList ,setCurrentPage,setTotalPage,searchText,setSearchText}) {
-     
-      const navigate = useNavigate();
+    function Nav({ setProductList ,setCurrentPage,setTotalPage,searchText,setSearchText,pageable,getCart,details}) {
+        const navigate = useNavigate();
+       
+
+        useEffect(()=>{
+            getCart(); 
+        },[]);
+
     //搜尋欄搜索
-      const search = async () => {
+        const search = async () => {
         try {
-          const response = await axios.get("http://localhost:8080/api/products/search"
-            , 
-            {
+        const response = await axios.get("http://localhost:8080/api/products/search"
+            , {
             params: { 
                 keyword:searchText ,
                 page:0,
                 size:9
             }
-          }
+        }
         );
         console.log(response.data);
         setCurrentPage(response.data.pageable.pageNumber)
@@ -32,26 +36,41 @@ import axios from 'axios';
         setProductList(response.data.content);
         navigate('Grids');
         } catch (error) {
-          console.error("Error fetching products:", error);
+        console.error("Error fetching products:", error);
         }
-      };
-    
+    };
 
-  
-      const handleSearchClick = () => {
+    //移除購物車物件
+    const handleRemoveItem = async(index,productId)=>{
+        try{
+          const response = await axios.delete("http://localhost:8080/api/cart/deleteProduct",{params:{
+            userId:1,//預設為1
+           cartDetailId: details[index].cartDetailId,
+           productId:productId
+          }});
+          console.log(details);
+         console.log(response.data);
+         getCart();
+        }catch(e){
+          console.error();
+        }
+        };
+
+
+        const handleSearchClick = () => {
         search();
-      };
+        };
     
-      const handleSearchChange = (e) => {
+        const handleSearchChange = (e) => {
         const value = e.target.value;
         console.log(value);
         setSearchText(value);
         
-      };
+        };
 
-      
-    return(
-      <div>
+    
+        return(
+        <div>
             {/* Start Header Area */}
             <header className="header navbar-area">
                 {/* Start Topbar */}
@@ -175,46 +194,43 @@ import axios from 'axios';
                                         <div className="cart-items">
                                             <a href="javascript:void(0)" className="main-btn">
                                                 <i className="lni lni-cart"></i>
-                                                <span className="total-items">2</span>
+                                                <span className="total-items">{pageable&&pageable.totalElements}</span>
                                             </a>
                                             {/* Shopping Item */}
                                             <div className="shopping-item">
                                                 <div className="dropdown-cart-header">
-                                                    <span>2 Items</span>
+                                                <span>
+                                                總共有 {pageable && pageable.totalElements} 件商品～
+                                                {pageable && pageable.totalElements > 5 ? (
+                                                    <>
+                                                    <br/>
+                                                    還有{pageable.totalElements-5}件商品未顯示～
+                                                    </>
+                                                    ) : null}
+                                                        </span>
+
                                                     <a href="/Cart">View Cart</a>
                                                 </div>
                                                 <ul className="shopping-list">
-                                                    <li>
-                                                        <a href="javascript:void(0)" className="remove" title="Remove this item"><i
-                                                            className="lni lni-close"></i></a>
-                                                        <div className="cart-img-head">
-                                                            <a className="cart-img" href="product-details.html"><img
-                                                                src="assets/images/header/cart-items/item1.jpg" alt="#" /></a>
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4><a href="product-details.html">
-                                                                Apple Watch Series 6</a></h4>
-                                                            <p className="quantity">1x - <span className="amount">$99.00</span></p>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0)" className="remove" title="Remove this item"><i
-                                                            className="lni lni-close"></i></a>
-                                                        <div className="cart-img-head">
-                                                            <a className="cart-img" href="product-details.html"><img
-                                                                src="assets/images/header/cart-items/item2.jpg" alt="#" /></a>
-                                                        </div>
-                                                        <div className="content">
-                                                            <h4><a href="product-details.html">Wi-Fi Smart Camera</a></h4>
-                                                            <p className="quantity">1x - <span className="amount">$35.00</span></p>
-                                                        </div>
-                                                    </li>
+                                                {pageable&&pageable.content.map((product,index)=>(
+                                                    <li key={product.product_id}>
+                                                    <a href="javascript:void(0)" className="remove" title="Remove this item" onClick={()=>{handleRemoveItem(index,product.product_id)}}><i
+                                                        className="lni lni-close" ></i></a>
+                                                    <div className="cart-img-head">
+                                                        <a className="cart-img" href="product-details.html"><img
+                                                            src={product.image_url} alt="#" /></a>
+                                                    </div>
+                                                    <div className="content">
+                                                        <h4><a href="product-details.html">
+                                                            {product.name}</a></h4>
+                                                         <span className="amount">${product.price}</span>
+                                                    </div>
+                                                </li>
+                                            
+                                                ))}
+                                                   
                                                 </ul>
                                                 <div className="bottom">
-                                                    <div className="total">
-                                                        <span>Total</span>
-                                                        <span className="total-amount">$134.00</span>
-                                                    </div>
                                                     <div className="button">
                                                         <a href="/Checkout" className="btn animate">Checkout</a>
                                                     </div>

@@ -86,7 +86,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-function Grids({ ProductList, setProductList, setCurrentPage, CurrentPage, searchText, TotalPage }) {
+function Grids({ ProductList, setProductList, setCurrentPage, CurrentPage, searchText, TotalPage ,getCart}) {
   const [products, setProducts] = useState(ProductList);
   const [sortOption, setSortOption] = useState('rating');
   const [searchPage,setSearchPage]=useState('0');
@@ -180,6 +180,27 @@ const handlePageChange = (i)=>{
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
+
+
+  const handleAddToCart = async(product_id)=>{
+    try{
+      const addToCart = {
+        productId:product_id,
+        quantity:1
+      }
+
+      const response = await axios.post("http://localhost:8080/api/cart/add",addToCart
+                    );
+        console.log(response.data);
+        alert("商品添加至購物車成功！")
+        getCart();
+    }catch(e){
+    console.error();
+    };
+  
+  };
+
+
 
   return (
       <div>
@@ -471,8 +492,8 @@ const handlePageChange = (i)=>{
                     <span className="sale-tag">-{product.discount}%</span>
                   )}
                   <div className="button">
-                    <a href="product-details.html" className="btn">
-                      <i className="lni lni-cart"></i> 加到購物車
+                    <a  className="btn" onClick={()=>{handleAddToCart(product.product_id)}}>
+                      <i className="lni lni-cart" ></i> 加到購物車
                     </a>
                   </div>
                 </div>

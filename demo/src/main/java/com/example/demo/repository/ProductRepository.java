@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
         @Modifying
         @Transactional
         Product save(Product updateProduct);
+
         //刪除 
         @Modifying
         @Transactional
@@ -26,17 +29,25 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
         
         //賣家頁面透過名稱以及產品id靈活搜尋產品
-        @Query("SELECT p FROM Product p WHERE " +
-       "(:name IS NULL OR p.name LIKE %:name%) AND " +
-       "(:productId IS NULL OR p.productId = :productId)")
-        Page<Product> findByNameContainingAndProductId(
+            @Query("SELECT p FROM Product p WHERE " +
+            "(:name IS NULL OR p.name LIKE %:name%) AND " +
+            "(:productId IS NULL OR p.productId = :productId)")
+            Page<Product> findByNameContainingAndProductId(
             @Param("name") String name, 
             @Param("productId") Integer productId, 
             PageRequest pageable);
 
 
- 
-}
+            //分頁搜索有id在productIds裡的商品
+            @Query("SELECT p FROM Product p WHERE p.productId IN :productIds")
+            Page<Product> findByIdIn(@Param("productIds") List<Integer> productIds, PageRequest pageRequest);
+
+
+            //搜索全部有id在productIds裡的商品
+            @Query("SELECT p FROM Product p WHERE p.productId IN :productIds")
+            List<Product>findByIdIn(@Param("productIds") List<Integer> productIds);
+       
+        }
 
 
 
