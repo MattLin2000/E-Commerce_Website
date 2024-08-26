@@ -1,56 +1,67 @@
-import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import axios from "axios";
 
 const AddProduct = () => {
-  const [productName, setProductName] = useState('');
-  const [productDescription, setProductDescription] = useState('');
-  const [productPrice, setProductPrice] = useState('');
-  const [productStock, setProductStock] = useState('');
-  const [productImage, setProductImage] = useState(null);//路徑
-  const [productCategory,setProductCategory]=useState(null);
-  const [alert, setAlert] = useState({ show: false, message: '', variant: '' });
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productStock, setProductStock] = useState("");
+  const [productImage, setProductImage] = useState(null); //路徑
+  const [productCategory, setProductCategory] = useState(null);
+  const [alert, setAlert] = useState({ show: false, message: "", variant: "" });
 
   const handleImageUpload = async (e) => {
     e.preventDefault();
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append('file', file); // 'file' 是上传到后端用來接收的参数名
+    formData.append("file", file); // 'file' 是上传到后端用來接收的参数名
 
     try {
-        const response = await axios.post('http://localhost:8080/api/products/uploadImage', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        console.log(response.data);
-        setProductImage(response.data);
+      const response = await axios.post(
+        "http://localhost:8080/api/products/uploadImage",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
+      setProductImage(response.data);
     } catch (error) {
-        console.error("圖片上傳失敗", error);
+      console.error("圖片上傳失敗", error);
     }
-};
-
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const jwtToken = localStorage.getItem("jwtToken");
     const product = {
-        name: productName,
-        description: productDescription,
-        price: productPrice,
-        stock: productStock,
-        image_url:productImage,
-        categoryId:productCategory
+      name: productName,
+      description: productDescription,
+      price: productPrice,
+      stock: productStock,
+      image_url: productImage,
+      categoryId: productCategory,
     };
 
     try {
-      await axios.post('http://localhost:8080/api/products/AddProduct', product);
-      setAlert({ show: true, message: '商品已成功添加！', variant: 'success' });
+      await axios.post(
+        "http://localhost:8080/api/products/AddProduct",
+        product,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      );
+      setAlert({ show: true, message: "商品已成功添加！", variant: "success" });
     } catch (error) {
-      setAlert({ show: true, message: '添加商品失敗！', variant: 'danger' });
+      setAlert({ show: true, message: "添加商品失敗！", variant: "danger" });
     }
-};
-
+  };
 
   return (
     <Container>
@@ -117,11 +128,7 @@ const AddProduct = () => {
 
             <Form.Group controlId="productImage">
               <Form.Label>商品圖片</Form.Label>
-              <Form.Control 
-                type="file"
-                onChange={handleImageUpload}
-                required
-              />
+              <Form.Control type="file" onChange={handleImageUpload} required />
             </Form.Group>
 
             <Button variant="primary" type="submit" className="mt-3">
@@ -131,8 +138,6 @@ const AddProduct = () => {
         </Col>
       </Row>
     </Container>
-
-
   );
 };
 
