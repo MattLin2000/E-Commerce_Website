@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({setJwtToken}) {
   // 使用 useState 來管理表單的各個輸入值的狀態
   const [email, setEmail] = useState(""); // 管理信箱輸入框的狀態
   const [password, setPassword] = useState(""); // 管理密碼輸入框的狀態
@@ -20,6 +20,7 @@ function Login() {
       );
       console.log(response.data);
       localStorage.setItem("jwtToken", response.data);
+    
       if (response.status === 200) {
         alert("登入成功，關閉窗口後自動跳轉至首頁");
         navigate("/");

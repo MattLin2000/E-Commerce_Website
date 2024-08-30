@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,9 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/register")
 public class UserController {
 
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private UserRepository userRepository;
 
@@ -42,8 +46,11 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<String> addNewUser(
             @RequestBody User user) {
-
-        userService.addNewUser(user);
+      // 將密碼加密後再保存
+      String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+      user.setPassword(encodedPassword);
+      user.setRole("admin");
+      userRepository.save(user);
 
         return ResponseEntity.ok("User saved successfully");
     }
@@ -70,11 +77,18 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginRequest) {
+    try {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetails user = userService.loadUserByUsername(loginRequest.getUsername());
         String jwt = jwtUtils.generateToken(user); // 生成JWT
+        System.out.println("Generated JWT: " + jwt); // 添加日誌
         return ResponseEntity.status(HttpStatus.OK).body(jwt); // 返回JWT
+    } catch (Exception e) {
+        e.printStackTrace(); // 捕獲和日誌異常
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
     }
+}
+
 }

@@ -30,13 +30,13 @@ public class CartController {
         cartService.addProductToCart(addToCart.getProductId(), addToCart.getQuantity());
         return ResponseEntity.ok("Product added to cart");
     }
-//獲得購物車內容(分頁式)
+//獲得購物車內容(搜索欄右邊)
     @GetMapping("/get")
     public List<Object> getCartDetails(@RequestParam int id) {
         return cartService.getProductsByUserId(id);
     }
 
-    //獲得購物車內容（全部）總結帳頁面使用
+    //獲得購物車內容（全部）總購物車頁面
     @GetMapping("/getAll")
     public List<Object> getAllCartDetails(@RequestParam int id) {
         return cartService.getAllProductsByUserId(id);

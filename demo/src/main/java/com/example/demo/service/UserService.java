@@ -18,17 +18,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    public void addNewUser(User user) {
-        User newUser = new User();
-        newUser.setUsername(user.getUsername());
-        newUser.setPassword(user.getPassword());
-        newUser.setEmail(user.getEmail());
-        newUser.setTel(user.getTel());
-        newUser.setRole("customer");
-
-        userRepository.save(newUser);
-    }
-
+  
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -36,13 +26,21 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
+        
         if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+            user = userRepository.findByEmail(username);
+            if(user==null){
+                throw new UsernameNotFoundException("User not found");}
+        }else{
+           System.out.println("foundUser!");
         }
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole())));
+                Collections.singleton(new SimpleGrantedAuthority("ROLE_"+user.getRole())));
     }
+
+    
+    
 
 }

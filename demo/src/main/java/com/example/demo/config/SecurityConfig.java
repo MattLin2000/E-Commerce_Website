@@ -13,8 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.demo.service.UserService;
 
@@ -27,27 +25,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(customizer -> customizer.disable())
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/products/SearchByNameAndId", "/register/login").permitAll()
-                        // .requestMatchers("/pages/**").permitAll()
-                        // .requestMatchers("/api/products/**", "/api/orders/**", "/api/payments/**",
-                        // "/api/orderitem/**")
-                        // .permitAll()
-                        // .requestMatchers("/api/auth/login", "/api/auth/logout",
-                        // "/api/auth/current").permitAll()
-                        .requestMatchers("/api/products/AddProduct").hasRole("admin")
-                        // .requestMatchers("/api/products", "/api/orders", "/api/users/**",
-                        // "/api/orderitem")
-                        // .hasAnyRole("SELLER", "ADMIN")
-                        .anyRequest().authenticated())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
-
+            .csrf(customizer -> customizer.disable())
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/api/products/search", "/register/login","/register/add").permitAll()
+                .requestMatchers("/api/cart/**").hasRole("admin")
+                .requestMatchers("/api/products/addProduct").hasRole("seller")
+                .anyRequest().authenticated()) // 確保這一行在所有 `permitAll()` 之後
+                // .anyRequest().permitAll()) // 允許所有請求
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
+    
         return http.build();
     }
-
+    
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -64,6 +55,11 @@ public class SecurityConfig {
     @Bean
     public JwtUtils jwtUtils() {
         return new JwtUtils();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

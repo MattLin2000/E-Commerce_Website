@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import axios from 'axios';
 function Register() {
   // 使用 useState 來管理各個輸入框的狀態
   const [firstName, setFirstName] = useState('');
@@ -10,19 +10,32 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   // 表單提交處理函數
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // 阻止表單提交後頁面刷新
-    // 在這裡可以進行註冊邏輯處理，例如發送 API 請求
+
     if (password !== confirmPassword) {
       alert('密碼與確認密碼不匹配');
       return;
     }
-    console.log('First Name:', firstName);
-    console.log('Last Name:', lastName);
-    console.log('Email:', email);
-    console.log('Phone:', phone);
-    console.log('Password:', password);
+
+    // 準備要發送到後端的資料
+    const User = {
+      username:firstName+lastName,
+      email:email,
+      tel:phone,
+      password:password
+    };
+
+    try {
+      // 使用 Axios 發送 POST 請求到後端 API
+      const response = await axios.post("http://localhost:8080/register/add", User);
+      alert(response.data); // 顯示伺服器返回的訊息
+    } catch (error) {
+      console.error('註冊過程中發生錯誤:', error);
+      alert('註冊失敗，請稍後再試。');
+    }
   };
+
 
   return (
     <div>

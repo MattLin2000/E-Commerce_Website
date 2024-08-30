@@ -18,20 +18,26 @@ const AddProduct = () => {
     formData.append("file", file); // 'file' 是上传到后端用來接收的参数名
 
     try {
+      const jwtToken = localStorage.getItem("jwtToken");
       const response = await axios.post(
         "http://localhost:8080/api/products/uploadImage",
         formData,
         {
           headers: {
+            Authorization: `Bearer ${jwtToken}`,
             "Content-Type": "multipart/form-data",
+            
           },
         }
       );
       console.log(response.data);
       setProductImage(response.data);
+    
     } catch (error) {
       console.error("圖片上傳失敗", error);
+      setAlert({show:true,message:"上傳圖片錯誤，請聯繫開發者！",variant:"danger"})
     }
+    setAlert({show:true,message:"圖片上傳成功！請點擊「新增商品」完成新增！",variant:"success"})
   };
 
   const handleSubmit = async (e) => {
@@ -82,15 +88,21 @@ const AddProduct = () => {
             </Form.Group>
 
             <Form.Group controlId="productCategory">
-              <Form.Label>類型</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={1}
-                placeholder="1"
-                value={productCategory}
-                onChange={(e) => setProductCategory(e.target.value)}
-                required
-              />
+            <Form.Label>類型</Form.Label>
+            <Form.Select
+            aria-label="選擇產品類型"
+            value={productCategory}
+            onChange={(e) => setProductCategory(e.target.value)}
+            required
+            >
+            <option value="">點擊選擇</option>
+            <option value="1">電腦及週邊</option>
+            <option value="2">智慧型手機及週邊</option>
+            <option value="3">電視及周邊</option>
+            <option value="4">照相機及攝影機</option>
+            <option value="5">耳機</option>
+            <option value="6">音響</option>
+            </Form.Select>
             </Form.Group>
 
             <Form.Group controlId="productDescription">
