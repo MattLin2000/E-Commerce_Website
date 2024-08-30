@@ -188,8 +188,13 @@ const handlePageChange = (i)=>{
         productId:product_id,
         quantity:1
       }
-
-      const response = await axios.post("http://localhost:8080/api/cart/add",addToCart
+      const jwtToken = localStorage.getItem("jwtToken");
+      const response = await axios.post("http://localhost:8080/api/cart/add",addToCart,{headers: {
+        // 設定自訂標頭，例如認證令牌
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json', // 設定內容類型
+        // 添加其他必要的標頭
+      }}
                     );
         console.log(response.data);
         alert("商品添加至購物車成功！")
