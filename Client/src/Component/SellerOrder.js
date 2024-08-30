@@ -6,7 +6,7 @@ import axios from 'axios'; // 引入 Axios 庫來處理 HTTP 請求
 
 
 
-const OrderManage = () => {
+const SellerOrder = () => {
   const [orders, setOrders] = useState([]);
   
 
@@ -38,7 +38,7 @@ const OrderManage = () => {
           <h4 className="text-center mb-4">賣家中心</h4>
           <ul className="list-unstyled w-100">
             <li className="mb-3 text-center">
-              <a href="/OrderManage" className="text-decoration-none text-dark font-weight-bold">
+              <a href="/SellerOrder" className="text-decoration-none text-dark font-weight-bold">
                 訂單管理
               </a>
             </li>
@@ -115,4 +115,4 @@ const OrderManage = () => {
   );
 };
 
-export default OrderManage;
+export default SellerOrder;

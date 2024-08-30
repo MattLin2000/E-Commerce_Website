@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
-function Login({setJwtToken}) {
+function Login() {
   // 使用 useState 來管理表單的各個輸入值的狀態
   const [email, setEmail] = useState(""); // 管理信箱輸入框的狀態
   const [password, setPassword] = useState(""); // 管理密碼輸入框的狀態
@@ -12,23 +12,33 @@ function Login({setJwtToken}) {
   const handleSubmit = async (event) => {
     event.preventDefault(); // 阻止表單提交後瀏覽器刷新頁面
     const User = { username: email, password: password };
-    // 在這裡可以進行登錄邏輯處理，例如發送 API 請求
+  
     try {
       const response = await axios.post(
         "http://localhost:8080/register/login",
         User
       );
       console.log(response.data);
-      localStorage.setItem("jwtToken", response.data);
-    
+     
+      
+      localStorage.setItem("jwtToken", response.data.jwtToken);
+      localStorage.setItem("username", response.data.username);
+  
       if (response.status === 200) {
         alert("登入成功，關閉窗口後自動跳轉至首頁");
         navigate("/");
       }
     } catch (error) {
-      console.error("登入錯誤");
+      console.error("登入錯誤", error);
+     
+      if (error.response && error.response.status === 401) {
+        alert("帳號或密碼錯誤，請修後重試（401）");
+      } else {
+        alert("登入失敗，請稍後再試！或聯絡開發人員！");
+      }
     }
   };
+  
 
   return (
     <div>

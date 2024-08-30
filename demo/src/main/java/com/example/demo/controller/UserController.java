@@ -76,19 +76,33 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User loginRequest) {
+public ResponseEntity<?> login(@RequestBody User loginRequest) {
     try {
+        // 驗證使用者身份
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        
+        // 設定安全上下文
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        
+        // 加載用戶詳細資料
         UserDetails user = userService.loadUserByUsername(loginRequest.getUsername());
-        String jwt = jwtUtils.generateToken(user); // 生成JWT
+        
+        // 生成 JWT Token
+        String jwt = jwtUtils.generateToken(user);
         System.out.println("Generated JWT: " + jwt); // 添加日誌
-        return ResponseEntity.status(HttpStatus.OK).body(jwt); // 返回JWT
+        
+        // 返回 JWT Token 和用戶名稱作為響應
+        Map<String, Object> response = new HashMap<>();
+        response.put("jwtToken", jwt);
+        response.put("username", user.getUsername());
+        
+        return ResponseEntity.ok(response); // 返回 200 OK 並包含 JWT Token
     } catch (Exception e) {
-        e.printStackTrace(); // 捕獲和日誌異常
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        e.printStackTrace(); // 捕獲並記錄異常，建議使用 Logger 替代
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed"); // 返回未授權狀態
     }
 }
+
 
 }

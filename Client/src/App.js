@@ -7,8 +7,8 @@ import Login from './Component/Login';
 import Register from './Component/Register';
 import Checkout from './Component/Checkout';
 import Cart from './Component/Cart';
-
-import OrderManage from './Component/OrderManage'
+import BuyerCenter from './Component/BuyerCenter';
+import SellerOrder from './Component/SellerOrder'
 import YourProducts from './Component/YourProduct';
 import AddProduct from './Component/AddProduct';
 import CantFindProduct from './Component/CantFindProduct';
@@ -22,9 +22,10 @@ function App() {
   const [searchText, setSearchText] = useState("");
   //Page物件
   const [pageable,setPageable]=useState();
-  //product_details，獲得購物車商品資訊，數量。。
+  //product_details，獲得購物車商品資訊，數量。
   const [details,setDetails]=useState();
-  //獲得jwtToken
+  //確認登入狀態
+  const [login,setLogin]=useState(false);
 
   //購物車搜索,返回Page物件和product_details
   const getCart = async ()=>{
@@ -56,20 +57,21 @@ function App() {
 <Routes>
   <Route path="/" element={<Layout searchText={searchText} setSearchText={setSearchText}
    setProductList={setProductList} setCurrentPage={setCurrentPage} setTotalPage={setTotalPage}
-   pageable={pageable}  getCart={getCart} details={details}/>} >
+   pageable={pageable}  getCart={getCart} details={details} login={login} setLogin={setLogin}/> } >
       <Route index element={<Home />}/>
       <Route path="Grids" element={<Grids searchText={searchText} setProductList={setProductList}
        ProductList={ProductList} setCurrentPage={setCurrentPage} 
        CurrentPage={CurrentPage} TotalPage={TotalPage}
        getCart={getCart}/>}/>
-      <Route path='Login' element={<Login   />}/>
+      <Route path='Login' element={<Login setLogin={setLogin}  />}/>
       <Route path='Register' element={<Register />}/>
       <Route path='Checkout' element={<Checkout />}/>
       <Route path='Cart' element={<Cart />}/>
-      <Route path="OrderManage" element={<OrderManage/>}/>
+      <Route path="SellerOrder" element={<SellerOrder/>}/>
       <Route path='YourProducts' element={<YourProducts/>}/>
       <Route path='AddProduct' element={<AddProduct/>}/>
       <Route path='CantFindProduct' element={<CantFindProduct/>}/>
+      <Route path='BuyerCenter' element={<BuyerCenter/>}/>
   </Route>
 
 

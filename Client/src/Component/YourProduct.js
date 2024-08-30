@@ -41,8 +41,12 @@ const handlePageChange = async(i)=>{
             size: 10 
         }
     };
-
-    const response = await axios.post("http://localhost:8080/api/products/SearchByNameAndId", myData);
+    const jwtToken = localStorage.getItem("jwtToken");  
+    const response = await axios.post("http://localhost:8080/api/products/SearchByNameAndId", myData,{
+     headers: {
+        Authorization: `Bearer ${jwtToken}`,
+     }
+    });
     setCurrentPage(i)
     console.log(response.data);
     setProducts(response.data.content);
@@ -64,8 +68,13 @@ const handlePageChange = async(i)=>{
                 size: 10 
             }
         };
-
-        const response = await axios.post("http://localhost:8080/api/products/SearchByNameAndId", myData);
+        const jwtToken = localStorage.getItem("jwtToken");
+        const response = await axios.post("http://localhost:8080/api/products/SearchByNameAndId",
+           myData,{
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+         }
+        });
         setTotalPage(response.data.totalPages)
         setCurrentPage(response.data.pageable.pageNumber)
         console.log(response.data);
@@ -97,7 +106,11 @@ const handleDeleteClick = (product)=>{
 //確認刪除
 const handleDelete=async ()=>{
   try {
+    const jwtToken = localStorage.getItem("jwtToken"); 
     await axios.delete("http://localhost:8080/api/products/deleteProduct", {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      },
       params: { productId:currentProduct.product_id}});
   } catch (error) {
     console.error("Error saving product:", error);
@@ -115,7 +128,12 @@ const handleDelete=async ()=>{
 //編輯按鈕視窗的儲存變更按鈕
   const handleSaveChanges = async () => {
     try {
-      await axios.patch("http://localhost:8080/api/products/updateProduct", currentProduct);
+      const jwtToken = localStorage.getItem("jwtToken");
+      await axios.patch("http://localhost:8080/api/products/updateProduct", currentProduct,{
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+       }
+      });
       console.log(currentProduct)
       setShowModal(false);
       searchProduct(); // 刷新商品列表
@@ -141,7 +159,7 @@ const handleDelete=async ()=>{
           <h4 className="text-center mb-4">賣家中心</h4>
           <ul className="list-unstyled w-100">
             <li className="mb-3 text-center">
-              <a href="/OrderManage" className="text-decoration-none text-dark font-weight-bold">
+              <a href="/SellerOrder" className="text-decoration-none text-dark font-weight-bold">
                 訂單管理
               </a>
             </li>

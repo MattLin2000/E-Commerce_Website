@@ -47,7 +47,11 @@ const Cart = () => {
    //購物車搜索,返回Page物件和product_details
    const getCart = async ()=>{
     try{
+      const jwtToken = localStorage.getItem("jwtToken");
     const response =  await axios.get("http://localhost:8080/api/cart/getAll",{
+      headers:{
+        Authorization: `Bearer ${jwtToken}`,
+    },
             params:
             {
                 id:1}//根據id修改，目前假設為1
@@ -65,7 +69,12 @@ const Cart = () => {
 //更新購物車商品數量
 const handleUpdateQuantity = async (e, index) => {
   try {
-      const response = await axios.patch("http://localhost:8080/api/cart/updateQuantity", null,{params:
+    const jwtToken = localStorage.getItem("jwtToken");
+      const response = await axios.patch("http://localhost:8080/api/cart/updateQuantity", null,{
+        headers:{
+            Authorization: `Bearer ${jwtToken}`,
+        }
+        ,params:
         {
           quantity: e.target.value,
           product_id: cartItems[index].product_id,
@@ -81,7 +90,10 @@ const handleUpdateQuantity = async (e, index) => {
 
 const handleRemoveItem = async(index,productId)=>{
 try{
-  const response = await axios.delete("http://localhost:8080/api/cart/deleteProduct",{params:{
+  const jwtToken = localStorage.getItem("jwtToken");
+  const response = await axios.delete("http://localhost:8080/api/cart/deleteProduct",{headers:{
+      Authorization: `Bearer ${jwtToken}`
+  },params:{
     userId:1,//預設為1
    cartDetailId: details[index].cartDetailId,
    productId:productId
