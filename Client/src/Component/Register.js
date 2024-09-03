@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function Register() {
   // 使用 useState 來管理各個輸入框的狀態
   const [firstName, setFirstName] = useState('');
@@ -8,6 +9,8 @@ function Register() {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
+
 
   // 表單提交處理函數
   const handleSubmit = async (event) => {
@@ -29,7 +32,8 @@ function Register() {
     try {
       // 使用 Axios 發送 POST 請求到後端 API
       const response = await axios.post("http://localhost:8080/register/add", User);
-      alert(response.data); // 顯示伺服器返回的訊息
+      alert(response.data+"！！即將轉向登入頁面，請登入！"); // 顯示伺服器返回的訊息
+      navigate("/login")
     } catch (error) {
       console.error('註冊過程中發生錯誤:', error);
       alert('註冊失敗，請稍後再試。');

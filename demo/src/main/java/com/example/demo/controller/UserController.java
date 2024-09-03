@@ -82,7 +82,7 @@ public ResponseEntity<?> login(@RequestBody User loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         
-        // 設定安全上下文
+        
         SecurityContextHolder.getContext().setAuthentication(authentication);
         
         // 加載用戶詳細資料
@@ -97,7 +97,7 @@ public ResponseEntity<?> login(@RequestBody User loginRequest) {
         response.put("jwtToken", jwt);
         response.put("username", user.getUsername());
         
-        return ResponseEntity.ok(response); // 返回 200 OK 並包含 JWT Token
+        return ResponseEntity.ok(response); 
     } catch (Exception e) {
         e.printStackTrace(); // 捕獲並記錄異常，建議使用 Logger 替代
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed"); // 返回未授權狀態

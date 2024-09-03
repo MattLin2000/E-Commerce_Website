@@ -74,6 +74,13 @@ function Nav({
     setSearchText(e.target.value);
   };
 
+  const handleLogout = ()=>{
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("username");
+    alert("您已登出！");
+    navigate("/");
+  }
+
   return (
     <div>
       {/* Start Header Area */}
@@ -111,7 +118,14 @@ function Nav({
                       </li>
                     </ul>
                   ) : (
-                    <a>{login}</a>
+                    <ul className="user-login">
+                      <li>
+                        <a >{login}</a>
+                      </li>
+                      <li>
+                        <a href="/" onClick={handleLogout}>登出</a>
+                      </li>
+                    </ul>
                   )}
                 </div>
               </div>
@@ -164,7 +178,7 @@ function Nav({
                   <div className="nav-hotline">
                     <i className="lni lni-phone"></i>
                     <h3>
-                      客服專線: <span>02-26778899</span>
+                      客服專線: <span>02-12345678</span>
                     </h3>
                   </div>
                   <div className="navbar-cart">
@@ -178,7 +192,7 @@ function Nav({
                       <a href="#" className="main-btn">
                         <i className="lni lni-cart"></i>
                         <span className="total-items">
-                          {pageable && pageable.totalElements}
+                          {(pageable && pageable.totalElements)||0}
                         </span>
                       </a>
                       {/* Shopping Item */}

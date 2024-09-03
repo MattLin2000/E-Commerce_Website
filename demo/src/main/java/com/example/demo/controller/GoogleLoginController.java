@@ -26,6 +26,7 @@ public class GoogleLoginController {
         String userInfo = googleOauthService.handleCallback(code);
         model.addAttribute("userInfo", userInfo);
         // 重定向到主頁，或者可以根據需要返回一個視圖名稱
+        
         return "redirect:http://localhost:3000";// 根據實際需要改為重定向或返回首頁視圖
     }
 }
