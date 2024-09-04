@@ -22,12 +22,16 @@ function Nav({
 }) {
   const navigate = useNavigate();
 
+  if (localStorage.getItem("jwtToken") != null) {
+    setLogin(localStorage.getItem("username").toString());
+  }
+
+
   useEffect(() => {
-    if (localStorage.getItem("jwtToken") != null) {
-      setLogin(localStorage.getItem("username").toString());
-    }
     getCart();
   }, []);
+
+
 
   const search = async () => {
     try {
@@ -49,13 +53,14 @@ function Nav({
 
   const handleRemoveItem = async (index, productId) => {
     try {
+      const id = localStorage.getItem("userId");
       const jwtToken = localStorage.getItem("jwtToken");
       await axios.delete("http://localhost:8080/api/cart/deleteProduct", {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
         params: {
-          userId: 1,
+          userId: id,
           cartDetailId: details[index].cartDetailId,
           productId: productId,
         },
@@ -77,6 +82,7 @@ function Nav({
   const handleLogout = ()=>{
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("username");
+    localStorage.removeItem("userId")
     alert("您已登出！");
     navigate("/");
   }

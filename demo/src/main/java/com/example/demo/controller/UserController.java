@@ -12,9 +12,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.config.JwtUtils;
@@ -92,10 +94,14 @@ public ResponseEntity<?> login(@RequestBody User loginRequest) {
         String jwt = jwtUtils.generateToken(user);
         System.out.println("Generated JWT: " + jwt); // 添加日誌
         
+        //獲得用戶id
+        int userId = userService.findByEmail(loginRequest.getUsername()).getUserId();
+
         // 返回 JWT Token 和用戶名稱作為響應
         Map<String, Object> response = new HashMap<>();
         response.put("jwtToken", jwt);
         response.put("username", user.getUsername());
+        response.put("userId",userId);
         
         return ResponseEntity.ok(response); 
     } catch (Exception e) {
@@ -103,6 +109,18 @@ public ResponseEntity<?> login(@RequestBody User loginRequest) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed"); // 返回未授權狀態
     }
 }
+
+    @GetMapping("/getUser")
+    public ResponseEntity<?>ProfileInformation(@RequestParam String username){
+        User userInfo = userService.findByUsername(username);
+
+        if (userInfo != null ) {
+            return ResponseEntity.ok(userInfo);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        }
+  
+    }
 
 
 }

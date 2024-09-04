@@ -27,7 +27,8 @@ public class CartController {
 //新增商品到購物車
     @PostMapping("/add")
     public ResponseEntity<String> addToCart(@RequestBody CartDetail addToCart) {
-        cartService.addProductToCart(addToCart.getProductId(), addToCart.getQuantity());
+
+        cartService.addProductToCart(addToCart.getCart().getCartId(),addToCart.getProductId(), addToCart.getQuantity());
         return ResponseEntity.ok("Product added to cart");
     }
 //獲得購物車內容(搜索欄右邊)

@@ -29,12 +29,12 @@ const BuyerCenter = () => {
               </a>
             </li>
             <li className="mb-3 text-center">
-              <a href="/MyOrders" className="text-decoration-none text-dark font-weight-bold">
-                我的訂單
+              <a href="/BuyerCenter" className="text-decoration-none text-dark font-weight-bold">
+                購物清單
               </a>
             </li>
             <li className="mb-3 text-center">
-              <a href="/ShoppingCart" className="text-decoration-none text-dark font-weight-bold">
+              <a href="/Cart" className="text-decoration-none text-dark font-weight-bold">
                 購物車
               </a>
             </li>
@@ -44,7 +44,7 @@ const BuyerCenter = () => {
         {/* Main Content Area */}
         <div className="col-md-9">
           <div className="content-section">
-            <h2 className="mb-4">我的訂單</h2>
+            <h2 className="mb-4">已購買的商品</h2>
 
             {/* Search Form for Orders */}
             <form className="mb-4">

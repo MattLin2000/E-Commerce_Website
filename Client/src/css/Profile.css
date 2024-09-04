@@ -1,0 +1,40 @@
+/* 設定頁面內容區域最小高度 */
+.content-section {
+    min-height: 400px; /* 可調整數值來符合需求 */
+  }
+  
+  /* 設定整個頁面以滿足視窗的最小高度 */
+  .container-fluid {
+    display: flex;
+    flex-direction: column;
+    min-height: 65vh; /* 屏幕高度 */
+  }
+  
+  .row {
+    flex-grow: 1; /* 主要內容區域伸展以填滿空間 */
+  }
+  
+  .footer {
+    margin-top: auto; /* 將 footer 固定在頁面底部 */
+  }
+  
+  /* 增加邊距和寬度 */
+.container-fluid {
+  padding: 0 15px; /* 增加容器左右邊距 */
+}
+
+.sidebar {
+  padding: 20px; /* 調整邊距以擴大側邊欄 */
+}
+
+.content-section {
+  padding: 20px; /* 增加內容區塊的邊距 */
+}
+
+.form-group {
+  margin-bottom: 20px; /* 增加表單組的下邊距 */
+}
+
+.form-control {
+  margin-top: 5px; /* 增加表單控制元件的上邊距 */
+}

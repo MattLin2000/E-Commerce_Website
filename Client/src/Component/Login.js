@@ -23,7 +23,7 @@ function Login() {
       
       localStorage.setItem("jwtToken", response.data.jwtToken);
       localStorage.setItem("username", response.data.username);
-  
+      localStorage.setItem("userId",response.data.userId)
       if (response.status === 200) {
         alert("登入成功，關閉窗口後自動跳轉至首頁");
         navigate("/");

@@ -115,8 +115,6 @@ function Grids({ ProductList, setProductList, setCurrentPage, CurrentPage, searc
   }, [CurrentPage]);
 
 
-
-
   useEffect(() => {
         // 如果需要其他排序方式的處理，可以在這裡添加
     if (sortOption === 'price-asc') {
@@ -139,7 +137,6 @@ if(ProductList&&ProductList.length>0){
 navigate("/CantFindProduct")
 }
 },[ProductList])
-
 
 
 const handlePageChange = (i)=>{
@@ -184,11 +181,20 @@ const handlePageChange = (i)=>{
 
   const handleAddToCart = async(product_id)=>{
     try{
-      const addToCart = {
-        productId:product_id,
-        quantity:1
-      }
+      const id = localStorage.getItem("userId");
+      console.log(id);
       const jwtToken = localStorage.getItem("jwtToken");
+      const addToCart = {
+        "cart": {
+          "cartId": id // cartId 應根據實際情況填寫
+        },
+        "productId": product_id, // 替換為實際的產品 ID
+        "quantity": 1 // 替換為實際的數量
+      }
+      
+      
+      
+     
       const response = await axios.post("http://localhost:8080/api/cart/add",addToCart,{headers: {
         // 設定自訂標頭，例如認證令牌
         Authorization: `Bearer ${jwtToken}`,

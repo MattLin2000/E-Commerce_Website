@@ -40,7 +40,9 @@ public class UserService implements UserDetailsService {
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_"+user.getRole())));
     }
 
-    
+    public User findByUsername(String username){
+        return  userRepository.findByUsername(username);
+    }
     
 
 }

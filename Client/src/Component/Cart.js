@@ -41,12 +41,14 @@ const Cart = () => {
       
         //進入頁面後自動執行獲得購物車內容
       useEffect(()=>{
-      getCart()
+  
+      getCart();
       },[]);
 
-   //購物車搜索,返回Page物件和product_details
+   //搜索購物車內的所有內容,返回Page物件和product_details
    const getCart = async ()=>{
     try{
+      const id = localStorage.getItem("userId");
       const jwtToken = localStorage.getItem("jwtToken");
     const response =  await axios.get("http://localhost:8080/api/cart/getAll",{
       headers:{
@@ -54,7 +56,7 @@ const Cart = () => {
     },
             params:
             {
-                id:1}//根據id修改，目前假設為1
+                id:id}//根據id修改，目前假設為1
         });
     const data0 = Array.from(response.data[0]);
     const data1=Array.from(response.data[1])
@@ -69,6 +71,7 @@ const Cart = () => {
 //更新購物車商品數量
 const handleUpdateQuantity = async (e, index) => {
   try {
+    const id = localStorage.getItem("userId");
     const jwtToken = localStorage.getItem("jwtToken");
       const response = await axios.patch("http://localhost:8080/api/cart/updateQuantity", null,{
         headers:{
@@ -79,7 +82,7 @@ const handleUpdateQuantity = async (e, index) => {
           quantity: e.target.value,
           product_id: cartItems[index].product_id,
           cartDetailId: details[index].cartDetailId,
-          userId: 1, // 這裡傳遞了 userId
+          userId: id, // 這裡傳遞了 userId
       }});
       console.log('Response:', response.data);
       getCart();
@@ -90,11 +93,12 @@ const handleUpdateQuantity = async (e, index) => {
 
 const handleRemoveItem = async(index,productId)=>{
 try{
+  const id = localStorage.getItem("userId");
   const jwtToken = localStorage.getItem("jwtToken");
   const response = await axios.delete("http://localhost:8080/api/cart/deleteProduct",{headers:{
       Authorization: `Bearer ${jwtToken}`
   },params:{
-    userId:1,//預設為1
+    userId:id,//預設為1(以修改)
    cartDetailId: details[index].cartDetailId,
    productId:productId
   }});
@@ -203,7 +207,7 @@ try{
                       <li className="last">應付金額<span>${finalAmount.toFixed(2)}</span></li>
                     </ul>
                     <div className="button">
-                      <a href="checkout.html" className="btn">結帳</a>
+                      <a href="/checkout" className="btn">結帳</a>
                       <a href="product-grids.html" className="btn btn-alt">繼續購物</a>
                     </div>
                   </div>

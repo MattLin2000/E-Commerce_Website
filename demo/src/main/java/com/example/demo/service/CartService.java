@@ -27,12 +27,12 @@ public class CartService {
     @Autowired
     private CartDetailRepository cartDetailRepository;
 
-    public void addProductToCart(int productId, int quantity) {
+    public void addProductToCart(int cartId, int productId, int quantity ) {
         // 找到或創建一個新的購物車
-        Cart cart = cartRepository.findByUserId(1); // 假設 user_id = 1，這部分你可以根據需要修改
+        Cart cart = cartRepository.findByUserId(cartId); // 假設 user_id = 1，這部分你可以根據需要修改
         if (cart == null) {
             cart = new Cart();
-            cart.setUserId(1);
+            cart.setUserId(cartId);
             cartRepository.save(cart);
         }
 

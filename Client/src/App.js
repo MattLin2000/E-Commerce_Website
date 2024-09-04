@@ -12,6 +12,7 @@ import SellerOrder from './Component/SellerOrder'
 import YourProducts from './Component/YourProduct';
 import AddProduct from './Component/AddProduct';
 import CantFindProduct from './Component/CantFindProduct';
+import Profile from './Component/Profile';
 import axios from 'axios';
 
 function App() {
@@ -26,11 +27,15 @@ function App() {
   const [details,setDetails]=useState();
   //確認登入狀態
   const [login,setLogin]=useState(false);
+  //獲得userInfoData
+ 
+ 
 
   //購物車搜索,返回Page物件和product_details
   const getCart = async ()=>{
     try {
-      const jwtToken = localStorage.getItem('jwtToken')
+      const id = localStorage.getItem('userId');
+      const jwtToken = localStorage.getItem('jwtToken');  
       const response = await axios.get("http://localhost:8080/api/cart/get", {
         headers: {
           // 設定自訂標頭，例如認證令牌
@@ -39,7 +44,7 @@ function App() {
           // 添加其他必要的標頭
         },
         params: {
-          id: 1, // 根據id查詢
+          id: id, // 根據id查詢
         },
       });
     
@@ -57,7 +62,8 @@ function App() {
 <Routes>
   <Route path="/" element={<Layout searchText={searchText} setSearchText={setSearchText}
    setProductList={setProductList} setCurrentPage={setCurrentPage} setTotalPage={setTotalPage}
-   pageable={pageable}  getCart={getCart} details={details} login={login} setLogin={setLogin}/> } >
+   pageable={pageable}  getCart={getCart} details={details} login={login} setLogin={setLogin}
+  /> } >
       <Route index element={<Home />}/>
       <Route path="Grids" element={<Grids searchText={searchText} setProductList={setProductList}
        ProductList={ProductList} setCurrentPage={setCurrentPage} 
@@ -66,18 +72,14 @@ function App() {
       <Route path='Login' element={<Login setLogin={setLogin}  />}/>
       <Route path='Register' element={<Register />}/>
       <Route path='Checkout' element={<Checkout />}/>
-      <Route path='Cart' element={<Cart />}/>
+      <Route path='Cart' element={<Cart  />}/>
       <Route path="SellerOrder" element={<SellerOrder/>}/>
       <Route path='YourProducts' element={<YourProducts/>}/>
       <Route path='AddProduct' element={<AddProduct/>}/>
       <Route path='CantFindProduct' element={<CantFindProduct/>}/>
       <Route path='BuyerCenter' element={<BuyerCenter/>}/>
+      <Route path='Profile' element={<Profile />}/>
   </Route>
-
-
-  
-
-
 </Routes>
 </BrowserRouter>
   );
