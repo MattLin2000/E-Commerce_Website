@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.Amount;
 import com.example.demo.model.CartDetail;
+import com.example.demo.model.User;
 import com.example.demo.service.CartService;
 
 
@@ -68,6 +70,13 @@ public ResponseEntity<String> deleteProduct(
 
     return cartService.deleteProduct(userId,cartDetailId,productId);
 }
+
+@PostMapping("/getTotalAmount")
+    public ResponseEntity<Amount> getTotalAmountById(@RequestBody User user){
+        System.out.println(user.getUserId());
+        return cartService.getTotalAmountById(user.getUserId());
+    }
+
 
 }
 

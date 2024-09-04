@@ -27,6 +27,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
         @Transactional
         void deleteById(int productId);
 
+        Product findByProductId(Integer productId);
         
         //賣家頁面透過名稱以及產品id靈活搜尋產品
             @Query("SELECT p FROM Product p WHERE " +
@@ -47,6 +48,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             @Query("SELECT p FROM Product p WHERE p.productId IN :productIds")
             List<Product>findByIdIn(@Param("productIds") List<Integer> productIds);
        
+
+
         }
 
 

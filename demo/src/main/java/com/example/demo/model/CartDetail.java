@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
@@ -14,6 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cart_details")
+@Component
 public class CartDetail {
 
     @Id
@@ -66,6 +69,7 @@ public class CartDetail {
         this.cart.setCartId(cartId);
     }
 
+
     public Integer getProductId() {
         return productId;
     }
@@ -81,4 +85,11 @@ public class CartDetail {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "CartDetail [cartDetailId=" + cartDetailId + ", cart=" + cart + ", productId=" + productId
+                + ", quantity=" + quantity + "]";
+    }
+    
 }

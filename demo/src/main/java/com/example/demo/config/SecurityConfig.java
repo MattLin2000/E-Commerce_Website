@@ -28,7 +28,7 @@ public class SecurityConfig {
             .csrf(customizer -> customizer.disable())
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/products/search", "/register/login","/register/add","/login/google","/callback/google").permitAll()
-                .requestMatchers("/api/cart/**").hasRole("admin")
+                .requestMatchers("/api/cart/**","/api/products/**").hasRole("admin")
                 .anyRequest().authenticated()) // 確保這一行在所有 `permitAll()` 之後
                 // .anyRequest().permitAll()) // 允許所有請求
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

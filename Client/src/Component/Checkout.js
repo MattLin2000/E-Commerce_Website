@@ -1,13 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-
+import axios from 'axios';
 function Checkout() {
-  const navigate = useNavigate();
-
-  const handleStepChange = () => {
+ 
+    const navigate = useNavigate();
+  //上一步
+    const handleStepChange = () => {
     navigate("/Cart");
   };
+  const [data ,setData] = useState();
+  //計算總金額
+  const getTotalAmount = async () => {
+    try {
+      const id = localStorage.getItem("userId"); // 取得使用者 ID
+      const data={
+        userId:id
+      }
+      const jwtToken = localStorage.getItem("jwtToken"); // 取得 JWT Token
+  
+      // 發送 POST 請求到後端
+      const response = await axios.post(
+        "http://localhost:8080/api/cart/getTotalAmount",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`, // 設置 Authorization 標頭
+          },
+        }
+      );
+  
+      // 打印返回的數據
+      console.log(response.data);
+      setData(response.data);
+    } catch (error) {
+      console.error(error); // 更改為顯示具體的錯誤訊息
+    }
+  };
+  
+
+    useEffect(()=>{
+    getTotalAmount()
+    },[])
+
 
   return (
     <section className="checkout-wrapper section">
@@ -151,24 +185,26 @@ function Checkout() {
               </div>
               <div className="checkout-sidebar-price-table mt-30">
                 <h5 className="title">購買金額</h5>
+                
                 <div className="sub-total-price">
                   <div className="total-price">
                     <p className="value">商品金額:</p>
-                    <p className="price">$144.00</p>
+                    <p className="price">${data&&data.total}</p>
                   </div>
                   <div className="total-price shipping">
                     <p className="value">折扣金額:</p>
-                    <p className="price">$10.50</p>
+                    <p className="price">${data&&data.totalDiscount}</p>
                   </div>
                   <div className="total-price discount">
                     <p className="value">運費:</p>
-                    <p className="price">$10.00</p>
+                    <p className="price">$0.00</p>
                   </div>
+                  
                 </div>
                 <div className="total-payable">
                   <div className="payable-price">
                     <p className="value">總金額:</p>
-                    <p className="price">$164.50</p>
+                    <p className="price">${data&&data.finalAmount}</p>
                   </div>
                 </div>
                 <div className="price-table-btn button">
