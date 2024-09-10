@@ -104,7 +104,13 @@ function Grids({ ProductList, setProductList, setCurrentPage, CurrentPage, searc
       });
       alert("商品添加至購物車成功！");
       getCart();
-    } catch (e) {
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        alert("請先登入");
+        navigate("/login")
+      } else {
+        console.error("發生錯誤：", error); // 捕捉其他錯誤
+      }
       console.error();
     }
   };
