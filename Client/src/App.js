@@ -14,6 +14,8 @@ import AddProduct from './Component/AddProduct';
 import CantFindProduct from './Component/CantFindProduct';
 import Profile from './Component/Profile';
 import axios from 'axios';
+import EcpayPage from './Component/EcpayPage';
+import PaymentResult from './Component/PaymentResult';
 
 function App() {
 
@@ -27,8 +29,8 @@ function App() {
   const [details,setDetails]=useState();
   //確認登入狀態
   const [login,setLogin]=useState(false);
-  //獲得userInfoData
- 
+  //獲得綠界回傳HTML
+  const [ecpayHTML,setEcpayHTML]=useState();
  
 
   //購物車搜索,返回Page物件和product_details
@@ -48,9 +50,9 @@ function App() {
         },
       });
     
-      setPageable(response.data[0]);
-      setDetails(response.data[1]);
-      console.log(response.data[0]);
+      // setPageable(response.data[0]);
+      setDetails(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(error); // 顯示錯誤資訊
     }
@@ -71,7 +73,7 @@ function App() {
        getCart={getCart}/>}/>
       <Route path='Login' element={<Login setLogin={setLogin}  />}/>
       <Route path='Register' element={<Register />}/>
-      <Route path='Checkout' element={<Checkout />}/>
+      <Route path='Checkout' element={<Checkout setEcpayHTML={setEcpayHTML}/>}/>
       <Route path='Cart' element={<Cart  />}/>
       <Route path="SellerOrder" element={<SellerOrder/>}/>
       <Route path='YourProducts' element={<YourProducts/>}/>
@@ -79,6 +81,8 @@ function App() {
       <Route path='CantFindProduct' element={<CantFindProduct/>}/>
       <Route path='BuyerCenter' element={<BuyerCenter/>}/>
       <Route path='Profile' element={<Profile />}/>
+      <Route path='EcpayPage' element={<EcpayPage ecpayHTML={ecpayHTML} />}/>
+      <Route path='PaymentResult' element={<PaymentResult />}/>
   </Route>
 </Routes>
 </BrowserRouter>

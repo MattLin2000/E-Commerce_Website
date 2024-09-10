@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "../css/Profile.css";
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const [data, setData] = useState();
-
+    const navigate = useNavigate()
     const getUserInfo = async () => {
+       try{
         const response = await axios.get("http://localhost:8080/register/getUser", {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -16,8 +18,16 @@ const Profile = () => {
         });
         console.log(response.data);
         setData(response.data);
+       }catch(error){
+        if (error.response && error.response.status === 403) {
+            alert("無此權限訪問此頁面");
+            navigate("/login")
+          } else {
+            console.error("發生錯誤：", error); // 捕捉其他錯誤
+       }
+       
     }
-
+    }
     useEffect(() => { getUserInfo() }, []);
 
     return (

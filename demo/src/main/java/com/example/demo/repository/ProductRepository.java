@@ -22,6 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
         @Transactional
         Product save(Product updateProduct);
 
+        Product findById(int product_id);
         //刪除 
         @Modifying
         @Transactional

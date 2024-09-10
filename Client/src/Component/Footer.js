@@ -21,7 +21,7 @@ export const Footer = () => {
                   </a>
                 </div>
               </div>
-              <div className="col-lg-9 col-md-8 col-12">
+              {/* <div className="col-lg-9 col-md-8 col-12">
                 <div className="footer-newsletter">
                   <h4 className="title">
                     訂閱最新消息
@@ -36,7 +36,7 @@ export const Footer = () => {
                     </form>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@ export const Footer = () => {
         <div className="container">
           <div className="bottom-inner">
             <div className="row">
-              <div className="col-lg-3 col-md-6 col-12">
+              <div className="col-lg-6 col-md-3 col-12">
                 {/* Single Widget */}
                 <div className="single-footer f-contact">
                   <h3>聯繫我們</h3>
@@ -63,9 +63,9 @@ export const Footer = () => {
                 </div>
                 {/* End Single Widget */}
               </div>
-              <div className="col-lg-3 col-md-6 col-12">
+              {/* <div className="col-lg-3 col-md-6 col-12"> */}
                 {/* Single Widget */}
-                <div className="single-footer our-app">
+                {/* <div className="single-footer our-app">
                   <h3>下載我們的App</h3>
                   <ul className="app-btn">
                     <li>
@@ -83,12 +83,12 @@ export const Footer = () => {
                       </a>
                     </li>
                   </ul>
-                </div>
+                </div> */}
                 {/* End Single Widget */}
-              </div>
-              <div className="col-lg-3 col-md-6 col-12">
+              {/* </div> */}
+              {/* <div className="col-lg-3 col-md-6 col-12"> */}
                 {/* Single Widget */}
-                <div className="single-footer f-link">
+                {/* <div className="single-footer f-link">
                   <h3>資訊</h3>
                   <ul>
                     <li><a href="about-us.html">關於我們</a></li>
@@ -96,9 +96,9 @@ export const Footer = () => {
                     <li><a href="javascript:void(0)">服務據點</a></li>
                     <li><a href="faq.html">常見問題</a></li>
                   </ul>
-                </div>
+                </div> */}
                 {/* End Single Widget */}
-              </div>
+              {/* </div> */}
             </div>
           </div>
         </div>
@@ -130,6 +130,8 @@ export const Footer = () => {
         </div>
       </div>
       {/* End Footer Bottom */}
+      
     </footer>
+    
   );
 };

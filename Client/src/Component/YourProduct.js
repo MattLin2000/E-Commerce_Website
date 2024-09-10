@@ -6,6 +6,7 @@ import '../css/glightbox.min.css';
 import '../css/main.css';
 import axios from 'axios'; // 引入 Axios 庫來處理 HTTP 請求
 import { Modal, Button, Form } from 'react-bootstrap'; // 引入 Bootstrap 的 Modal 和 Form 元件
+import { useNavigate } from 'react-router-dom';
 
 
 const YourProducts = () => {
@@ -30,6 +31,7 @@ const YourProducts = () => {
 const [TotalPage,setTotalPage]=useState(1);
 const [CurrentPage,setCurrentPage]=useState(0);
   //每次按下新的頁碼，傳送一次新的搜索
+  const navigate = useNavigate()
 const handlePageChange = async(i)=>{
   try {
     const myData = {
@@ -80,9 +82,16 @@ const handlePageChange = async(i)=>{
         console.log(response.data);
         setProducts(response.data.content);
     } catch (error) {
-        console.error("Error fetching products:", error);
-    }
-};
+        // 檢查錯誤響應中的狀態碼
+        if (error.response && error.response.status === 403) {
+          alert("無此權限訪問此頁面");
+          navigate("/login")
+        } else {
+          console.error("發生錯誤：", error); // 捕捉其他錯誤
+        }
+      };
+       
+      };
 
   
   useEffect(() => {

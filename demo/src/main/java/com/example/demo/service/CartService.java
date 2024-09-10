@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,9 @@ public class CartService {
     private ProductRepository productRepository;
     @Autowired
     private CartDetailRepository cartDetailRepository;
-    @Autowired
-    private Amount amount;
-    @Autowired
-    private CartDetail cartDetail;
-    public void addProductToCart(int cartId, int productId, int quantity ) {
+   
+   
+    public void addProductToCart(int cartId, Product  product, int quantity ) {
         // 找到或創建一個新的購物車
         Cart cart = cartRepository.findByUserId(cartId); 
         if (cart == null) {
@@ -41,15 +40,17 @@ public class CartService {
         }
 
             // 創建購物車:先驗證該商品是否已經在購物車內
-        CartDetail byCartAndProductId = cartDetailRepository.findByCartAndProductId(cart,productId);
+        CartDetail byCartAndProductId = cartDetailRepository.findByCartAndProduct(cart,product);
         if(byCartAndProductId==null){
+            CartDetail cartDetail = new CartDetail();
             cartDetail.setCartId(cart.getCartId());
-            cartDetail.setProductId(productId);
+            cartDetail.setProduct(product);
             cartDetail.setQuantity(quantity);
             cartDetailRepository.save(cartDetail);
         }else{
+            CartDetail cartDetail = new CartDetail();
             cartDetail.setCartId(byCartAndProductId.getCart().getCartId());
-            cartDetail.setProductId(byCartAndProductId.getProductId());
+            cartDetail.setProduct(byCartAndProductId.getProduct());
             cartDetail.setQuantity(byCartAndProductId.getQuantity()+1);
             cartDetail.setCartDetailId(byCartAndProductId.getCartDetailId());
             cartDetailRepository.save(cartDetail);
@@ -59,49 +60,50 @@ public class CartService {
 
 
     //透過id分頁查詢購物車內商品
-    public List<Object> getProductsByUserId(int userId) {
+    public Page<CartDetail> getProductsByUserId(int userId) {
         // 先尋找該用戶是否擁有購物車
         Cart cart = cartRepository.findByUserId(userId);
         if (cart != null) {
             // 搜索所有購物車內容
-            List<CartDetail> details = cartDetailRepository.findAllByCart(cart);
+            // List<CartDetail> details = cartDetailRepository.findAllByCart(cart);
     
             // 提取所有 productId
-            List<Integer> productIds = details.stream()
-                                            .map(CartDetail::getProductId)
-                                            .collect(Collectors.toList());
+            // List<Integer> productIds = details.stream()
+            //                                 .map(CartDetail::getProductId)
+            //                                 .collect(Collectors.toList());
         
             // 使用分頁查詢產品
             PageRequest pageRequest = PageRequest.of(0, 5);
-           Page<Product> pageResult=productRepository.findByIdIn(productIds, pageRequest);
-           List<Object> result = new ArrayList<>();
-           result.add(0,pageResult);
-           result.add(1,details);
-            return result;
+        //    Page<Product> pageResult=productRepository.findByIdIn(productIds, pageRequest);
+        //    List<Object> result = new ArrayList<>();
+        //    result.add(0,pageResult);
+        //    result.add(1,details);
+            Page<CartDetail> pageResult = cartDetailRepository.findAllByCart(cart,pageRequest);
+            return pageResult;
         }
         // 防止 null pointer 錯誤
-        return new ArrayList<>();
+        return null;
     }
     
 
     //透過id 搜尋所有購物車內的商品
-    public List<Object> getAllProductsByUserId(int userId) {
+    public List<CartDetail> getAllProductsByUserId(int userId) {
         // 先尋找該用戶是否擁有購物車
         Cart cart = cartRepository.findByUserId(userId);
         if (cart != null) {
             // 搜索所有購物車內容
             List<CartDetail> details = cartDetailRepository.findAllByCart(cart);
     
-            // 提取所有 productId
-            List<Integer> productIds = details.stream()
-                                            .map(CartDetail::getProductId)
-                                            .collect(Collectors.toList());
+            // // 提取所有 productId
+            // List<Integer> productIds = details.stream()
+            //                                 .map(CartDetail::getProductId)
+            //                                 .collect(Collectors.toList());
         
-            List<Product> products =productRepository.findByIdIn(productIds);
-            List<Object> result = new ArrayList<>();
-            result.add(0,products);
-            result.add(1,details);
-            return result;
+            // List<Product> products =productRepository.findByIdIn(productIds);
+            // List<Object> result = new ArrayList<>();
+            // result.add(0,products);
+            // result.add(1,details);
+            return details;
         }
         // 防止 null pointer 錯誤
         return new ArrayList<>();
@@ -113,7 +115,8 @@ public class CartService {
         if(cartRepository.findByUserId(userId)!=null){
             CartDetail cartDetail = new CartDetail();
             cartDetail.setCartDetailId(cartDetailId);
-            cartDetail.setProductId(product_id);
+            Product byId  = productRepository.findById(product_id);
+            cartDetail.setProduct(byId);
             cartDetail.setQuantity(quantity);
             cartDetail.setCart(cartRepository.findByUserId(userId));
             cartDetailRepository.save(cartDetail);
@@ -148,16 +151,17 @@ public class CartService {
         double totalDiscount =0;
         for (CartDetail c : cartDetails) {
             //獲得product來獲得價格
-        Product p =  productRepository.findByProductId(c.getProductId());
+        Product p =  productRepository.findByProductId(c.getProduct().getProduct_id());
             
             totalAmount+=(c.getQuantity()*p.getPrice());
             //獲得折扣
             totalDiscount+=(c.getQuantity()*p.getPrice()*(p.getDiscount()*0.01));
         }
         //設定總計
-        amount.setTotal(totalAmount);
-        amount.setTotalDiscount(totalDiscount);
-        amount.setFinalAmount(totalAmount-totalDiscount);
+        Amount amount = new Amount();
+        amount.setTotal(Math.round(totalAmount));
+        amount.setTotalDiscount(Math.round(totalDiscount));
+        amount.setFinalAmount(Math.round(totalAmount-totalDiscount));
 
 
         return ResponseEntity.ok(amount);

@@ -19,7 +19,7 @@ function Login() {
         User
       );
       console.log(response.data);
-     
+    
       
       localStorage.setItem("jwtToken", response.data.jwtToken);
       localStorage.setItem("username", response.data.username);
@@ -51,11 +51,11 @@ function Login() {
                 <div className="card-body">
                   <div className="title">
                     <h3>馬上登入</h3>
-                    <p>你可以連結帳號登入</p>
+                    {/* <p>你可以連結帳號登入</p> */}
                   </div>
                   <div className="social-login">
                     <div className="row">
-                      <div className="col-lg-4 col-md-4 col-12">
+                      {/* <div className="col-lg-4 col-md-4 col-12">
                         <a
                           className="btn facebook-btn"
                           href="javascript:void(0)"
@@ -63,8 +63,8 @@ function Login() {
                           <i className="lni lni-facebook-filled"></i> Facebook
                           login
                         </a>
-                      </div>
-                      <div className="col-lg-4 col-md-4 col-12">
+                      </div> */}
+                      {/* <div className="col-lg-4 col-md-4 col-12">
                         <a
                           className="btn twitter-btn"
                           href="javascript:void(0)"
@@ -72,20 +72,20 @@ function Login() {
                           <i className="lni lni-twitter-original"></i> Twitter
                           login
                         </a>
-                      </div>
-                      <div className="col-lg-4 col-md-4 col-12">
+                      </div> */}
+                      {/* <div className="col-lg-4 col-md-4 col-12">
                         <a
                           className="btn google-btn"
                           href="http://localhost:8080/login/google"
                         >
                           <i className="lni lni-google"></i> Google login
                         </a>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
-                  <div className="alt-option">
+                  {/* <div className="alt-option">
                     <span>或是</span>
-                  </div>
+                  </div> */}
                   <div className="form-group input-group">
                     <label htmlFor="reg-email">信箱</label>
                     <input

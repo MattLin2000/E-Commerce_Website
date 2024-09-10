@@ -23,21 +23,21 @@ public class SecurityConfig {
     private UserService UserService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(customizer -> customizer.disable())
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/products/search", "/register/login","/register/add","/login/google","/callback/google").permitAll()
-                .requestMatchers("/api/cart/**","/api/products/**").hasRole("admin")
-                .anyRequest().authenticated()) // 確保這一行在所有 `permitAll()` 之後
-                // .anyRequest().permitAll()) // 允許所有請求
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
-    
-        return http.build();
-    }
-    
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(authorize -> authorize
+            .requestMatchers("/api/products/search", "/register/login", 
+            "/register/add", "/login/google", "/callback/google", "/api/checkout/**").permitAll()
+            .requestMatchers("/api/checkout/getAllOrders").hasRole("admin") // 僅限 admin 存取
+            .anyRequest().authenticated()) // 其他所有請求需要登入
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authenticationProvider(authenticationProvider())
+        .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
+}
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();

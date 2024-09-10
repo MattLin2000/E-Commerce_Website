@@ -16,7 +16,6 @@ function Nav({
   setTotalPage,
   searchText,
   setSearchText,
-  pageable,
   getCart,
   details,
 }) {
@@ -61,7 +60,7 @@ function Nav({
         },
         params: {
           userId: id,
-          cartDetailId: details[index].cartDetailId,
+          cartDetailId: details.content[index].cartDetailId,
           productId: productId,
         },
       });
@@ -126,7 +125,7 @@ function Nav({
                   ) : (
                     <ul className="user-login">
                       <li>
-                        <a >{login}</a>
+                        <a href="/BuyerCenter">{login}</a>
                       </li>
                       <li>
                         <a href="/" onClick={handleLogout}>登出</a>
@@ -146,7 +145,7 @@ function Nav({
             <div className="row align-items-center">
               <div className="col-lg-3 col-md-3 col-7">
                 {/* Start Header Logo */}
-                <a className="navbar-brand" href="index">
+                <a className="navbar-brand" href="/">
                   <img src={logo} alt="Logo" />
                 </a>
                 {/* End Header Logo */}
@@ -158,7 +157,8 @@ function Nav({
                     <div className="search-select">
                       <div className="select-position">
                         <select id="select1">
-                          <option selected>全部分類</option>
+                          <option selected>
+                            <a href="/Grids">全部分類</a></option>
                         </select>
                       </div>
                     </div>
@@ -188,57 +188,57 @@ function Nav({
                     </h3>
                   </div>
                   <div className="navbar-cart">
-                    <div className="wishlist">
+                    {/* <div className="wishlist">
                       <a href="#">
                         <i className="lni lni-heart"></i>
                         <span className="total-items">0</span>
                       </a>
-                    </div>
+                    </div> */}
                     <div className="cart-items">
                       <a href="#" className="main-btn">
                         <i className="lni lni-cart"></i>
                         <span className="total-items">
-                          {(pageable && pageable.totalElements)||0}
+                          {(details && details.totalElements)||0}
                         </span>
                       </a>
                       {/* Shopping Item */}
                       <div className="shopping-item">
                         <div className="dropdown-cart-header">
                           <span>
-                            總共有 {pageable && pageable.totalElements} 件商品～
-                            {pageable && pageable.totalElements > 5 ? (
+                            總共有 {details && details.totalElements} 件商品～
+                            {details && details.totalElements > 5 ? (
                               <>
                                 <br />
-                                還有 {pageable.totalElements - 5} 件商品未顯示～
+                                還有 {details.totalElements - 5} 件商品未顯示～
                               </>
                             ) : null}
                           </span>
                           <a href="/Cart">View Cart</a>
                         </div>
                         <ul className="shopping-list">
-                          {pageable &&
-                            pageable.content.map((product, index) => (
-                              <li key={product.product_id}>
+                          {details &&
+                            details.content.map((detail, index) => (
+                              <li key={detail.product.product_id}>
                                 <a
                                   href="#"
                                   className="remove"
                                   title="Remove this item"
                                   onClick={() =>
-                                    handleRemoveItem(index, product.product_id)
+                                    handleRemoveItem(index, detail.product.product_id)
                                   }
                                 >
                                   <i className="lni lni-close"></i>
                                 </a>
                                 <div className="cart-img-head">
                                   <a className="cart-img" href="product-details.html">
-                                    <img src={product.image_url} alt="#" />
+                                    <img src={detail.product.image_url} alt="#" />
                                   </a>
                                 </div>
                                 <div className="content">
                                   <h4>
-                                    <a href="product-details.html">{product.name}</a>
+                                    <a href="product-details.html">{detail.product.name}</a>
                                   </h4>
-                                  <span className="amount">${product.price}</span>
+                                  <span className="amount">${detail.product.price}</span>
                                 </div>
                               </li>
                             ))}
@@ -269,13 +269,14 @@ function Nav({
                 {/* Start Mega Category Menu */}
                 <div className="mega-category-menu">
                   <span className="cat-button">
-                    <i className="lni lni-menu"></i> 全部分類
+                    {/* <i className="lni lni-menu"></i>  */}
+                    <a href="/Grids">熱賣商品</a>
                   </span>
-                  <ul className="sub-category">
+                  {/* <ul className="sub-category">
                     <li>
                       <a href="/Grids" value="1">電子產品</a>
                     </li>
-                  </ul>
+                  </ul> */}
                 </div>
                 {/* End Mega Category Menu */}
                 {/* Start Navbar */}

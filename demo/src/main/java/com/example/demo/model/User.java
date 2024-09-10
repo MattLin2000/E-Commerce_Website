@@ -13,6 +13,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
+    private String username;
+    private String email;
+    private String password;
+    private String role;
+    private String tel;
 
     public Integer getUserId() {
         return userId;
@@ -21,12 +26,6 @@ public class User {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-
-    private String username;
-    private String email;
-    private String password;
-    private String role;
-    private String tel;
 
     public String getTel() {
         return tel;

@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -16,7 +15,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cart_details")
-@Component
 public class CartDetail {
 
     @Id
@@ -26,11 +24,12 @@ public class CartDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
-    @JsonBackReference//避免循環引用，導致序列化JSON時出現錯誤
+    // @JsonBackReference//避免循環引用，導致序列化JSON時出現錯誤
     private Cart cart;
 
-    @Column(name = "product_id")
-    private Integer productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(name = "quantity")
     private Integer quantity;
@@ -40,9 +39,9 @@ public class CartDetail {
     public CartDetail() {
     }
 
-    public CartDetail(Cart cart, Integer productId, Integer quantity) {
+    public CartDetail(Cart cart, Product  product, Integer quantity) {
         this.cart = cart;
-        this.productId = productId;
+        this.product = product;
         this.quantity = quantity;
     }
 
@@ -70,12 +69,12 @@ public class CartDetail {
     }
 
 
-    public Integer getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Integer getQuantity() {
@@ -86,10 +85,5 @@ public class CartDetail {
         this.quantity = quantity;
     }
 
-    @Override
-    public String toString() {
-        return "CartDetail [cartDetailId=" + cartDetailId + ", cart=" + cart + ", productId=" + productId
-                + ", quantity=" + quantity + "]";
-    }
-    
+  
 }

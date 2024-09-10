@@ -1,9 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import axios from 'axios';
 const Cart = () => {
-      // 購物車內容
-      const [cartItems, setCartItems] = useState([]);
-      //cartProductDetails，獲得購物車內產品的數量資訊等
+      //cartDetails，獲得購物車內產品的數量資訊等
       const [details,setDetails]=useState();
       //總原價格
       const [totalAmount,setTotalAmount]=useState(0);
@@ -14,15 +12,15 @@ const Cart = () => {
       //計算邏輯
       useEffect(() => {
         // 當 cartItems 或 details 改變時重新計算
-        if (cartItems.length > 0 && details.length > 0) {
+        if ( details) {
           //狀態雖然默認為0，但若直接修改State的默認內容，會觸發Attempted to assign to readonly property
           //所以需要再宣告一次，避免這個直接去修改state的默認值。！！！
           let totalAmount=0;
           let totalDiscount=0;
-          cartItems.forEach((item, index) => {
-            const quantity = details[index].quantity;
-            const originalPrice = item.price * quantity;
-            const discount = originalPrice * (item.discount * 0.01);
+          details.forEach((item, index) => {
+            const quantity = item.quantity;
+            const originalPrice = item.product.price * quantity;
+            const discount = originalPrice * (item.product.discount * 0.01);
             
             totalAmount += originalPrice;
             totalDiscount += discount;
@@ -36,7 +34,7 @@ const Cart = () => {
           setTotalDiscount(0);
           setFinalAmount(0);
         }
-      }, [cartItems, details]);
+      }, [ details]);
       
       
         //進入頁面後自動執行獲得購物車內容
@@ -56,13 +54,14 @@ const Cart = () => {
     },
             params:
             {
-                id:id}//根據id修改，目前假設為1
+              id:id}//根據id修改，目前假設為1
         });
-    const data0 = Array.from(response.data[0]);
-    const data1=Array.from(response.data[1])
-    setCartItems(data0);
-    setDetails(data1);   
+    // const data0 = Array.from(response.data[0]);
+    // const data1=Array.from(response.data[1])
+    // setCartItems(data0);
+    // setDetails(data1);   
     console.log(response.data);
+    setDetails(response.data)
     }catch(error){
         console.error();
     }
@@ -80,7 +79,7 @@ const handleUpdateQuantity = async (e, index) => {
         ,params:
         {
           quantity: e.target.value,
-          product_id: cartItems[index].product_id,
+          product_id: details[index].product.product_id,
           cartDetailId: details[index].cartDetailId,
           userId: id, // 這裡傳遞了 userId
       }});
@@ -95,7 +94,9 @@ const handleRemoveItem = async(index,productId)=>{
 try{
   const id = localStorage.getItem("userId");
   const jwtToken = localStorage.getItem("jwtToken");
-  const response = await axios.delete("http://localhost:8080/api/cart/deleteProduct",{headers:{
+  const response = await axios.delete("http://localhost:8080/api/cart/deleteProduct",
+    { 
+      headers:{
       Authorization: `Bearer ${jwtToken}`
   },params:{
     userId:id,//預設為1(以修改)
@@ -138,40 +139,40 @@ try{
           {/* End Cart List Title */}
 
           {/* Cart Single List list */}
-          {cartItems&&cartItems.map((item,index) => (
-            <div className="cart-single-list" key={item.product_id}>
+          {details&&details.map((item,index) => (
+            <div className="cart-single-list" key={item.product.product_id}>
               <div className="row align-items-center">
                 <div className="col-lg-1 col-md-1 col-12">
                   <a href="product-details.html">
-                    <img src={item.image_url} alt={item.name} />
+                    <img src={item.product.image_url} alt={item.product.name} />
                   </a>
                 </div>
                 <div className="col-lg-4 col-md-3 col-12">
                   <h5 className="product-name">
-                    <a href="product-details.html">{item.name}</a>
+                    <a href="product-details.html">{item.product.name}</a>
                   </h5>
                   <p className="product-des">
-                    <span><em>Type:</em> {item.categoryId}</span>
+                    <span><em>Type:</em> {item.product.categoryId}</span>
                     {/* <span><em>Color:</em> {item.color}</span> */}
                   </p>
                 </div>
                 <div className="col-lg-2 col-md-2 col-12">
                   <div className="count-input">
-                    <select className="form-control" value={details[index].quantity}  onChange={(e) => {handleUpdateQuantity(e,index)}}>
-                      {Array.from({length:item.stock},(_,num)=>num+1).map(num => (
+                    <select className="form-control" value={item.quantity}  onChange={(e) => {handleUpdateQuantity(e,index)}}>
+                      {Array.from({length:item.product.stock},(_,num)=>num+1).map(num => (
                         <option key={num} value={num}>{num}</option>
                       ))}
                     </select>
                   </div>
                 </div>
                 <div className="col-lg-2 col-md-2 col-12">
-                  <p>${(item.price*details[index].quantity).toFixed(2)}</p>
+                  <p>${(item.product.price*item.quantity).toFixed(2)}</p>
                 </div>
                 <div className="col-lg-2 col-md-2 col-12">
-                  <p>${((item.price*details[index].quantity)*(item.discount*0.01)).toFixed(2)}</p>
+                  <p>${((item.product.price*item.quantity)*(item.product.discount*0.01)).toFixed(2)}</p>
                 </div>
                 <div className="col-lg-1 col-md-2 col-12">
-                  <a className="remove-item" href="javascript:void(0)" onClick={()=>handleRemoveItem(index,item.product_id)}>
+                  <a className="remove-item" href="javascript:void(0)" onClick={()=>handleRemoveItem(index,item.product.product_id)}>
                     <i className="lni lni-close"></i>
                   </a>
                 </div>
@@ -187,7 +188,7 @@ try{
             <div className="total-amount">
               <div className="row">
                 <div className="col-lg-8 col-md-6 col-12">
-                  <div className="left">
+                  {/* <div className="left">
                     <div className="coupon">
                       <form action="#" target="_blank">
                         <input name="Coupon" placeholder="Enter Your Coupon" />
@@ -196,7 +197,7 @@ try{
                         </div>
                       </form>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="col-lg-4 col-md-6 col-12">
                   <div className="right">

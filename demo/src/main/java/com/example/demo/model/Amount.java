@@ -1,28 +1,28 @@
 package com.example.demo.model;
 
-import org.springframework.stereotype.Component;
 
-@Component
+
+
 public class Amount {
-    private Double total;
-    private Double totalDiscount;
-    private Double finalAmount;
-    public Double getTotal() {
+    private Long total;
+    public Long getTotal() {
         return total;
     }
-    public void setTotal(Double total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
-    public Double getTotalDiscount() {
+    public Long getTotalDiscount() {
         return totalDiscount;
     }
-    public void setTotalDiscount(Double totalDiscount) {
+    public void setTotalDiscount(Long totalDiscount) {
         this.totalDiscount = totalDiscount;
     }
-    public Double getFinalAmount() {
+    public Long getFinalAmount() {
         return finalAmount;
     }
-    public void setFinalAmount(Double finalAmount) {
+    public void setFinalAmount(Long finalAmount) {
         this.finalAmount = finalAmount;
     }
+    private Long totalDiscount;
+    private Long finalAmount;
 }

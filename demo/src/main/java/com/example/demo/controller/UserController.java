@@ -51,20 +51,20 @@ public class UserController {
       // 將密碼加密後再保存
       String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
       user.setPassword(encodedPassword);
-      user.setRole("admin");
+      user.setRole("customer");
       userRepository.save(user);
 
         return ResponseEntity.ok("User saved successfully");
     }
 
-    @PostMapping("/check-email")
-    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestBody Map<String, String> body) {
-        String email = body.get("email");
-        boolean exists = userRepository.existsByEmail(email);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("exists", exists);
-        return ResponseEntity.ok(response);
-    }
+    // @PostMapping("/check-email")
+    // public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestBody Map<String, String> body) {
+    //     String email = body.get("email");
+    //     boolean exists = userRepository.existsByEmail(email);
+    //     Map<String, Boolean> response = new HashMap<>();
+    //     response.put("exists", exists);
+    //     return ResponseEntity.ok(response);
+    // }
 
     @PostMapping("/email_login")
     public ResponseEntity<String> login(@RequestBody User user, HttpSession session) {

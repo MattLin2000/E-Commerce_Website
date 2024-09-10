@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,19 +30,19 @@ public class CartController {
 //新增商品到購物車
     @PostMapping("/add")
     public ResponseEntity<String> addToCart(@RequestBody CartDetail addToCart) {
-
-        cartService.addProductToCart(addToCart.getCart().getCartId(),addToCart.getProductId(), addToCart.getQuantity());
+        //cartId為UserId
+        cartService.addProductToCart(addToCart.getCart().getCartId(),addToCart.getProduct(), addToCart.getQuantity());
         return ResponseEntity.ok("Product added to cart");
     }
 //獲得購物車內容(搜索欄右邊)
     @GetMapping("/get")
-    public List<Object> getCartDetails(@RequestParam int id) {
+    public Page<CartDetail> getCartDetails(@RequestParam int id) {
         return cartService.getProductsByUserId(id);
     }
 
     //獲得購物車內容（全部）總購物車頁面
     @GetMapping("/getAll")
-    public List<Object> getAllCartDetails(@RequestParam int id) {
+    public List<CartDetail> getAllCartDetails(@RequestParam int id) {
         return cartService.getAllProductsByUserId(id);
     }
 

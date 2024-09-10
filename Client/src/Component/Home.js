@@ -17,7 +17,7 @@ import '../css/main.css';
   return (
     <div>
       {/* <!-- Start Hero Area --> */}
-      <section className="hero-area">
+      <section className="hero-area" style={{minHeight:'75vh'}} >
         <div className="container">
           <div className="row">
             <div className="col-lg-8 col-12 custom-padding-right">
@@ -41,8 +41,8 @@ import '../css/main.css';
                         <span>特價</span> $320.99
                       </h3>
                       <div className="button">
-                        <a href="product-grids.html" className="btn">
-                          馬上購買
+                        <a href="/Grids" className="btn">
+                          快去逛逛
                         </a>
                       </div>
                     </div>
@@ -80,8 +80,8 @@ import '../css/main.css';
                       <h2>特賣商品推薦!</h2>
                       <p>6折起好物現正供應中！</p>
                       <div className="button">
-                        <a className="btn" href="product-grids.html">
-                          馬上購買
+                        <a className="btn" href="/Grids">
+                          快去逛逛！
                         </a>
                       </div>
                     </div>
@@ -96,7 +96,7 @@ import '../css/main.css';
       {/* <!-- End Hero Area --> */}
 
       {/* <!-- Start Brands Area --> */}
-      <div className="brands">
+      {/* <div className="brands">
         <div className="container">
           <div className="row">
             <div className="col-lg-6 offset-lg-3 col-md-12 col-12">
@@ -132,15 +132,15 @@ import '../css/main.css';
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* <!-- End Brands Area --> */}
 
       {/* <!-- Start Shipping Info --> */}
-      <section className="shipping-info">
+      {/* <section className="shipping-info">
         <div className="container">
-          <ul>
+          <ul> */}
             {/* Free Shipping */}
-            <li>
+            {/* <li>
               <div className="media-icon">
                 <i className="lni lni-delivery"></i>
               </div>
@@ -148,9 +148,9 @@ import '../css/main.css';
                 <h5>免運</h5>
                 <span>消費滿199元免費運送</span>
               </div>
-            </li>
+            </li> */}
             {/* Money Return */}
-            <li>
+            {/* <li>
               <div className="media-icon">
                 <i className="lni lni-support"></i>
               </div>
@@ -158,9 +158,9 @@ import '../css/main.css';
                 <h5>全天候專人在線服務</h5>
                 <span>請撥打專線：02-26778899</span>
               </div>
-            </li>
+            </li> */}
             {/* Support 24/7 */}
-            <li>
+            {/* <li>
               <div className="media-icon">
                 <i className="lni lni-credit-cards"></i>
               </div>
@@ -168,9 +168,9 @@ import '../css/main.css';
                 <h5>線上付款</h5>
                 <span>安全線上付費</span>
               </div>
-            </li>
+            </li> */}
             {/* Safe Payment */}
-            <li>
+            {/* <li>
               <div className="media-icon">
                 <i className="lni lni-reload"></i>
               </div>
@@ -181,7 +181,7 @@ import '../css/main.css';
             </li>
           </ul>
         </div>
-      </section>
+      </section> */}
       {/* <!-- End Shipping Info --> */}
     </div>
   );
