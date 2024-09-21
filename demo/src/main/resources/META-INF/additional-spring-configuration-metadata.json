@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "oauth2.provider.google.auth-uri",
+  "type": "java.lang.String",
+  "description": "A description for 'oauth2.provider.google.auth-uri'"
+}]}
