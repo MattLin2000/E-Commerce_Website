@@ -64,9 +64,9 @@
 
 ## 相依技術
 
-- **後端**：Spring Boot、Maven、Java
+- **後端**：Spring Boot、Maven、Java、Spring Security
 - **前端**：React、JavaScript、Bootstrap
-- **資料庫**：可配置 MySQL 或其他 RDBMS
+- **資料庫**：可配置 MySQL、JPA
 
 ## 版本管理
 
