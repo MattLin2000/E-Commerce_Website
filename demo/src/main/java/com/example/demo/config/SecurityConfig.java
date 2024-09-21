@@ -29,7 +29,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers("/api/products/search", "/register/login", 
             "/register/add", "/login/google", "/callback/google","api/checkout/ecpayReturn").permitAll()
-            .requestMatchers("/api/checkout/getAllOrders","/api/products/** ").hasRole("admin") // 僅限 admin 存取
+            .requestMatchers("/api/checkout/getAllOrders","/api/products/**").hasRole("admin") // 僅限 admin 存取
             .anyRequest().authenticated()) // 其他所有請求需要登入
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authenticationProvider(authenticationProvider())
