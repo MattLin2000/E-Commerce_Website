@@ -85,7 +85,7 @@ const handlePageChange = async(i)=>{
         // 檢查錯誤響應中的狀態碼
         if (error.response && error.response.status === 403) {
           alert("無此權限訪問此頁面");
-          navigate("/login")
+          navigate("/")
         } else {
           console.error("發生錯誤：", error); // 捕捉其他錯誤
         }
@@ -249,8 +249,8 @@ const handleDelete=async ()=>{
                 ))}
               </tbody>
             </table>
-{/* 分頁 */}
-<div className="col-12">
+      {/* 分頁 */}
+    <div className="col-12">
       <div className="pagination left">
         <ul className="pagination-list">
           {Array.from({ length: TotalPage }, (_, i) => (

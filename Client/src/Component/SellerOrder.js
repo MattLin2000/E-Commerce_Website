@@ -10,6 +10,36 @@ const BuyerCenter = () => {
   const [showModal, setShowModal] = useState(false); // 控制 Modal 的顯示狀態
   const navigate = useNavigate()
   const handleSearchOrderChange = (e) => setSearchOrder(e.target.value);
+  const [TotalPage,setTotalPage]=useState();
+  const [CurrentPage,setCurrentPage]=useState(0);
+
+  const handlePageChange = async(i)=>{
+    try {
+      const id = localStorage.getItem("userId");
+      const jwtToken = localStorage.getItem("jwtToken");
+      const response = await axios.get("http://localhost:8080/api/checkout/getAllOrders", {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+        params: {
+          userId: id,
+          page: i,
+          size: 10,
+        },
+      });
+      setOrders(response.data.content); // 設置訂單列表
+      console.log(response.data)
+      setTotalPage(response.data.totalPages);
+      setCurrentPage(response.data.pageable.pageNumber);
+    } catch (error) {
+      console.error(error);
+      if (error.response && error.response.status === 403) {
+        alert("無此權限訪問此頁面");
+        navigate("/login")
+      } else {
+        console.error("發生錯誤：", error); // 捕捉其他錯誤
+    }}
+  }
 
   const getOrders = async () => {
     try {
@@ -21,11 +51,14 @@ const BuyerCenter = () => {
         },
         params: {
           userId: id,
-          page: 0,
+          page: CurrentPage,
           size: 10,
         },
       });
       setOrders(response.data.content); // 設置訂單列表
+      console.log(response.data)
+      setTotalPage(response.data.totalPages);
+      setCurrentPage(response.data.pageable.pageNumber);
     } catch (error) {
       console.error(error);
       if (error.response && error.response.status === 403) {
@@ -89,7 +122,7 @@ const BuyerCenter = () => {
             <h2 className="mb-4">賣家訂單管理</h2>
 
             {/* Search Form for Orders */}
-            <form className="mb-4">
+            {/* <form className="mb-4">
               <div className="form-group d-flex align-items-center">
                 <label htmlFor="orderSearch" className="mr-2">訂單編號：</label>
                 <textarea
@@ -108,7 +141,7 @@ const BuyerCenter = () => {
                   搜尋
                 </button>
               </div>
-            </form>
+            </form> */}
 
             {/* Display Orders */}
             <table className="table table-striped table-hover">
@@ -135,6 +168,22 @@ const BuyerCenter = () => {
                 ))}
               </tbody>
             </table>
+
+            {/* 分頁 */}
+    <div className="col-12">
+      <div className="pagination left">
+        <ul className="pagination-list">
+          {Array.from({ length: TotalPage }, (_, i) => (
+            <li key={i} className={CurrentPage === i  ? 'active' : ''}>
+              <a href="javascript:void(0)" onClick={() => handlePageChange(i)}>
+                {i + 1}
+              </a>
+            </li>
+          ))}
+            <li><a href="javascript:void(0)"><i className="lni lni-chevron-right"></i></a></li>
+          </ul>
+        </div>
+      </div>
           </div>
         </div>
       </div>
@@ -176,6 +225,7 @@ const BuyerCenter = () => {
                 </li>
               ))}
             </ul>
+            
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>

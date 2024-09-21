@@ -209,7 +209,7 @@ try{
                     </ul>
                     <div className="button">
                       <a href="/checkout" className="btn">結帳</a>
-                      <a href="product-grids.html" className="btn btn-alt">繼續購物</a>
+                      <a href="/Grids" className="btn btn-alt">繼續購物</a>
                     </div>
                   </div>
                 </div>

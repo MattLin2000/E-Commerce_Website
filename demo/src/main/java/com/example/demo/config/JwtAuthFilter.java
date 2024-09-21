@@ -36,7 +36,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String username;
         final String jwtToken;
-
+                //如果header內的Authorization為空，或者不是以beaer開頭，直接放行，會被security直接403
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -44,10 +44,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         jwtToken = authHeader.substring(7);
         username = jwtUtils.extractUsername(jwtToken);
-
+        //如果能從jwttoken獲得username表明token有效
+        //確認當前的securityContext沒有存放認證信息。如果已經有Authentication對象，則不需要重新驗證。
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            //驗證jwt的真實性，時間是否過期等
             if (jwtUtils.validateToken(jwtToken, userDetails)) {
+                //UsernamePasswordAuthenticationToken：用來表示用戶已經通過身份驗證。
+                //UserDetails為從資料庫驗證完已經登入回傳的物件，所以無需再提供密碼
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
                         null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

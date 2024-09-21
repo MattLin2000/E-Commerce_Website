@@ -67,6 +67,7 @@ public class OrderService {
 		obj.setNeedExtraPaidInfo("N");
 		
 		String form = all.aioCheckOut(obj, null);
+		System.out.println(form);
 		return form;
 	}
 

@@ -342,7 +342,7 @@ function Checkout({ setEcpayHTML }) {
           </div>
           <div className="col-lg-4">
             <div className="checkout-sidebar">
-              <div className="checkout-sidebar-coupon">
+              {/* <div className="checkout-sidebar-coupon">
                 <p>輸入優惠券折扣碼</p>
                 <form action="#">
                   <div className="single-form form-default">
@@ -354,7 +354,7 @@ function Checkout({ setEcpayHTML }) {
                     </div>
                   </div>
                 </form>
-              </div>
+              </div> */}
               <div className="checkout-sidebar-price-table mt-30">
                 <h5 className="title">購買金額</h5>
 

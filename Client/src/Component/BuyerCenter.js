@@ -9,6 +9,35 @@ const BuyerCenter = () => {
   const [selectedOrder, setSelectedOrder] = useState(null); // 儲存選中的訂單詳細資料
   const [showModal, setShowModal] = useState(false); // 控制 Modal 的顯示狀態
   const navigate = useNavigate();
+  const [TotalPage,setTotalPage]=useState();
+  const [CurrentPage,setCurrentPage]=useState();
+  
+  const handlePageChange=async(i) =>{
+    try {
+      const id = localStorage.getItem("userId");
+      const jwtToken = localStorage.getItem("jwtToken");
+      const response = await axios.get("http://localhost:8080/api/checkout/getOrders", {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+        params: {
+          userId: id,
+          page: i,
+          size: 10,
+        },
+      });
+      console.log(response.data);
+      setOrders(response.data.content); // 設置訂單列表
+      setCurrentPage(response.data.pageable.pageNumber);  
+    } catch (error) {
+      // 檢查錯誤響應中的狀態碼
+      if (error.response && error.response.status === 403) {
+        alert("無此權限訪問此頁面");
+        navigate("/Grids")
+      } else {
+        console.error("發生錯誤：", error); // 捕捉其他錯誤
+      }}
+  }
   const getOrders = async () => {
     try {
       const id = localStorage.getItem("userId");
@@ -25,11 +54,13 @@ const BuyerCenter = () => {
       });
       console.log(response.data);
       setOrders(response.data.content); // 設置訂單列表
+      setCurrentPage(response.data.pageable.pageNumber);
+      setTotalPage(response.data.totalPages)
     } catch (error) {
       // 檢查錯誤響應中的狀態碼
       if (error.response && error.response.status === 403) {
         alert("無此權限訪問此頁面");
-        navigate("/login")
+        navigate("/Grids")
       } else {
         console.error("發生錯誤：", error); // 捕捉其他錯誤
       }}}
@@ -134,6 +165,22 @@ const BuyerCenter = () => {
                 ))}
               </tbody>
             </table>
+
+            {/* 分頁 */}
+    <div className="col-12">
+      <div className="pagination left">
+        <ul className="pagination-list">
+          {Array.from({ length: TotalPage }, (_, i) => (
+            <li key={i} className={CurrentPage === i  ? 'active' : ''}>
+              <a href="javascript:void(0)" onClick={() => handlePageChange(i)}>
+                {i + 1}
+              </a>
+            </li>
+          ))}
+            {/* <li><a href="javascript:void(0)"><i className="lni lni-chevron-right"></i></a></li> */}
+          </ul>
+        </div>
+      </div>
           </div>
         </div>
       </div>

@@ -28,8 +28,8 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers("/api/products/search", "/register/login", 
-            "/register/add", "/login/google", "/callback/google", "/api/checkout/**").permitAll()
-            .requestMatchers("/api/checkout/getAllOrders").hasRole("admin") // 僅限 admin 存取
+            "/register/add", "/login/google", "/callback/google","api/checkout/ecpayReturn").permitAll()
+            .requestMatchers("/api/checkout/getAllOrders","/api/products/** ").hasRole("admin") // 僅限 admin 存取
             .anyRequest().authenticated()) // 其他所有請求需要登入
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authenticationProvider(authenticationProvider())

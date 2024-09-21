@@ -96,7 +96,9 @@ function Nav({
             <div className="row align-items-center">
               <div className="col-lg-4 col-md-4 col-12">
                 <div className="top-left">
-                  <ul className="menu-top-link"></ul>
+                  <ul className="menu-top-link">
+                    <a href="/YourProducts">賣家中心</a>
+                  </ul>
                 </div>
               </div>
               <div className="col-lg-4 col-md-4 col-12">
@@ -305,11 +307,11 @@ function Nav({
         顧客中心
       </a>
     </li>
-    <li className="nav-item">
+    {/* <li className="nav-item">
       <a className="nav-link" href="/YourProducts">
         賣家中心
       </a>
-    </li>
+    </li> */}
   </ul>
 </div>
 
